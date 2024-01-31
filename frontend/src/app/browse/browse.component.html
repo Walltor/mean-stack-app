@@ -1,1 +1,73 @@
-<p>browse works!</p>
+<div class="search-container">
+    <form class="text-center">
+        <div class="browse-row">
+            <input type="text" id="title" name="title" placeholder="Title" >
+            <select class="form-select" id="type" name="type" [(ngModel)]="typeSelect">
+                <option value="All Types" selected="All Types">All Types</option>
+                <option *ngFor="let type of types" [value]="type.name">{{ type.name }}</option>
+            </select>
+            <select class="form-select" id="state" name="state">
+                <option value="All States" selected="All States">All States</option>
+                <option>Cityville</option>
+                <option>Metropolis</option>
+                <option >Scenicview</option>
+                <option >Corporateville</option>
+                <option >Suburbia</option>
+                <option >Highrise City</option>
+                <option >Mountainville</option>
+            </select>
+        </div>
+        <div class="browse-row">
+            <select class="form-select" id="bedrooms" name="bedrooms" [disabled]="typeSelect === 'Plot'">
+                <option value="No. of bedrooms" selected="No. of bedrooms">No. of bedrooms</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+            <select class="form-select" id="bathrooms" name="bathrooms" [disabled]="typeSelect === 'Plot'">
+                <option value="No. of bathrooms" selected="No. of bathrooms">No. of bathrooms</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+            <select class="form-select" id="garages" name="garages" [disabled]="typeSelect === 'Plot'">
+                <option value="No. of garages" selected="No. of garages">No. of garages</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+        </div>
+        <div class="browse-row">
+            <input type="text" id="min-price" name="min-price" placeholder="Min Price (€)">
+            <input type="text" id="max-price" name="max-price" placeholder="Max Price (€)">
+            <input [disabled]="typeSelect === 'Plot'" type="text" id="min-size" name="min-size" placeholder="Min Size (m2)">
+            <input [disabled]="typeSelect === 'Plot'" type="text" id="max-size" name="max-size" placeholder="Max Size (m2)">
+            <input [disabled]="typeSelect !== 'Plot'" type="text" id="min-area" name="min-area" placeholder="Min Area (ha)">
+            <input [disabled]="typeSelect !== 'Plot'" type="text" id="max-area" name="max-area" placeholder="Max Area (ha)">
+        </div>
+        <div>
+            <button type="button">Search</button>
+        </div>
+    </form>
+</div>

@@ -6,7 +6,7 @@ class ItemController {
   // Get all items
   static async getAllItems(req, res) {
     try {
-      const items = await ItemModel.find();
+      const items = await ItemModel.find({}).populate('type', 'name');
       res.status(200).json(items);
     } catch (error) {
       console.error('Error:', error);

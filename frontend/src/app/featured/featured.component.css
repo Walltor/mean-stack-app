@@ -1,0 +1,27 @@
+.card {
+  margin: 0 auto;
+  display: flex;
+  width: 18rem;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel {
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.attributes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.carousel-indicators li {
+  background-color: black !important;
+}
+
+.carousel-indicators .active {
+  background-color: black !important; 
+}
