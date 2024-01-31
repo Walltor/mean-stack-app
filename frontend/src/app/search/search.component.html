@@ -1,1 +1,26 @@
-<p>search works!</p>
+<div class="search-container">
+    <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h1>
+    <h3>Nunc posuere odio at commodo vestibulum. Sed eget semper nunc, non varius eros.</h3>
+    <hr>
+    <form class="text-center">
+        <div>
+            <select class="form-select" id="type" name="type">
+                <option value="All Types" selected="All Types">All Types</option>
+                <option *ngFor="let type of types" [value]="type.id">{{ type.name }}</option>
+            </select>
+            <select class="form-select" id="state" name="state">
+                <option value="All States" selected="All States">All States</option>
+                <option>Cityville</option>
+                <option>Metropolis</option>
+                <option >Scenicview</option>
+                <option >Corporateville</option>
+                <option >Suburbia</option>
+                <option >Highrise City</option>
+                <option >Mountainville</option>
+            </select>
+            <input type="text" id="min-price" name="min-price" placeholder="Min Price (€)">
+            <input type="text" id="max-price" name="max-price" placeholder="Max Price (€)">
+            <button type="button">Search</button>
+        </div>  
+    </form>
+</div>

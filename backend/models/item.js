@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const itemSchema = new mongoose.Schema({
     title: { type: String },
-    type: { type: mongoose.Schema.Types.ObjectId, ref: 'Nesto' },
+    type: { type: mongoose.Schema.Types.ObjectId, ref: 'Type' },
     address: { 
         street: String, 
         city: String, 

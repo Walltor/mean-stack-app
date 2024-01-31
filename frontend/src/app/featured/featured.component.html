@@ -1,1 +1,19 @@
-<p>featured works!</p>
+<carousel [isAnimated]="isAnimated" [noWrap]="noWrapSlides" [showIndicators]="showIndicator" [itemsPerSlide]="itemsPerSlide" *ngIf="items && items.length">
+  <slide *ngFor="let item of items">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ item.title }}</h5>
+        <div><i class="bi bi-cursor"></i><p class="card-text">{{ item.address.street }}, {{ item.address.city }}</p></div>
+        <p class="card-text">{{ item.type.name }}</p>
+        <div><p class="card-text">{{ item.price }}</p><i class="bi bi-currency-euro"></i></div>
+        <div class="attributes" [ngSwitch]="item.type.name">
+          <div><i class="bi bi-arrows-move"></i><p *ngSwitchCase="'Plot'" class="card-text">{{ item.area }}</p></div>
+          <div><i class="bi bi-arrows-move"></i><p *ngSwitchDefault class="card-text">{{ item.size }}</p></div>
+          <div><i class="bi bi-door-open"></i><p class="card-text">{{ item.bedrooms }}</p>  </div>
+          <div><i class="bi bi-droplet"></i><p class="card-text">{{ item.bathrooms }}</p></div>
+          <p class="card-text">{{ item.garages }}</p>  
+        </div>
+      </div>
+    </div>
+  </slide>
+</carousel>
