@@ -4,23 +4,23 @@
     <hr>
     <form class="text-center">
         <div>
-            <select class="form-select" id="type" name="type">
-                <option value="All Types" selected="All Types">All Types</option>
-                <option *ngFor="let type of types" [value]="type.id">{{ type.name }}</option>
+            <select class="form-select" id="type" name="type" [(ngModel)]="type">
+                <option selected="All Types" value="">All Types</option>
+                <option *ngFor="let type of types" [value]="type._id">{{ type.name }}</option>
             </select>
-            <select class="form-select" id="state" name="state">
-                <option value="All States" selected="All States">All States</option>
+            <select class="form-select" id="state" name="state" [(ngModel)]="city">
+                <option selected="All States" value="">All States</option>
                 <option>Cityville</option>
                 <option>Metropolis</option>
-                <option >Scenicview</option>
-                <option >Corporateville</option>
-                <option >Suburbia</option>
-                <option >Highrise City</option>
-                <option >Mountainville</option>
+                <option>Scenicview</option>
+                <option>Corporateville</option>
+                <option>Suburbia</option>
+                <option>Highrise City</option>
+                <option>Mountainville</option>
             </select>
             <input type="text" id="min-price" name="min-price" placeholder="Min Price (€)">
             <input type="text" id="max-price" name="max-price" placeholder="Max Price (€)">
-            <button type="button">Search</button>
+            <button type="button" (click)="search()">Search</button>
         </div>  
     </form>
 </div>

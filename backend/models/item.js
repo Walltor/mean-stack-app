@@ -12,11 +12,12 @@ const itemSchema = new mongoose.Schema({
     bathrooms: { type: Number },
     garages: { type: Number },
     price: { type: Number },
-    size: { type: Number},
+    size: { type: Number },
     area: { type: Number },
-    forsale: {type: Boolean},
-    featured: {type: Boolean},
-    new: {type: Boolean}
+    forsale: { type: Boolean },
+    featured: { type: Boolean },
+    new: { type: Boolean },
+    images: [{ type: String }]
 });
 
 const Item = mongoose.model('Item', itemSchema);

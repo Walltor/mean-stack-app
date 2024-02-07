@@ -1,25 +1,25 @@
 <div class="search-container">
     <form class="text-center">
         <div class="browse-row">
-            <input type="text" id="title" name="title" placeholder="Title" >
-            <select class="form-select" id="type" name="type" [(ngModel)]="typeSelect">
-                <option value="All Types" selected="All Types">All Types</option>
-                <option *ngFor="let type of types" [value]="type.name">{{ type.name }}</option>
+            <input type="text" id="title" name="title" placeholder="Title" [(ngModel)]="title">
+            <select class="form-select" id="type" name="type" [(ngModel)]="type">
+                <option selected="All Types" value="">All Types</option>
+                <option *ngFor="let type of types" [value]="type._id">{{ type.name }}</option>
             </select>
-            <select class="form-select" id="state" name="state">
-                <option value="All States" selected="All States">All States</option>
+            <select class="form-select" id="state" name="state" [(ngModel)]="city">
+                <option selected="All States" value="">All States</option>
                 <option>Cityville</option>
                 <option>Metropolis</option>
-                <option >Scenicview</option>
-                <option >Corporateville</option>
-                <option >Suburbia</option>
-                <option >Highrise City</option>
-                <option >Mountainville</option>
+                <option>Scenicview</option>
+                <option>Corporateville</option>
+                <option>Suburbia</option>
+                <option>Highrise City</option>
+                <option>Mountainville</option>
             </select>
         </div>
         <div class="browse-row">
-            <select class="form-select" id="bedrooms" name="bedrooms" [disabled]="typeSelect === 'Plot'">
-                <option value="No. of bedrooms" selected="No. of bedrooms">No. of bedrooms</option>
+            <select class="form-select" id="bedrooms" name="bedrooms" [disabled]="type === '65afd0827c1611711ff207b5'" [(ngModel)]="bedrooms">
+                <option selected="No. of bedrooms" [ngValue]="null">No. of bedrooms</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -31,8 +31,8 @@
                 <option>9</option>
                 <option>10</option>
             </select>
-            <select class="form-select" id="bathrooms" name="bathrooms" [disabled]="typeSelect === 'Plot'">
-                <option value="No. of bathrooms" selected="No. of bathrooms">No. of bathrooms</option>
+            <select class="form-select" id="bathrooms" name="bathrooms" [disabled]="type === '65afd0827c1611711ff207b5'" [(ngModel)]="bathrooms">
+                <option selected="No. of bathrooms" [ngValue]="null">No. of bathrooms</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -44,8 +44,8 @@
                 <option>9</option>
                 <option>10</option>
             </select>
-            <select class="form-select" id="garages" name="garages" [disabled]="typeSelect === 'Plot'">
-                <option value="No. of garages" selected="No. of garages">No. of garages</option>
+            <select class="form-select" id="garages" name="garages" [disabled]="type === '65afd0827c1611711ff207b5'" [(ngModel)]="garages">
+                <option selected="No. of garages" [ngValue]="null">No. of garages</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -59,15 +59,35 @@
             </select>
         </div>
         <div class="browse-row">
-            <input type="text" id="min-price" name="min-price" placeholder="Min Price (€)">
-            <input type="text" id="max-price" name="max-price" placeholder="Max Price (€)">
-            <input [disabled]="typeSelect === 'Plot'" type="text" id="min-size" name="min-size" placeholder="Min Size (m2)">
-            <input [disabled]="typeSelect === 'Plot'" type="text" id="max-size" name="max-size" placeholder="Max Size (m2)">
-            <input [disabled]="typeSelect !== 'Plot'" type="text" id="min-area" name="min-area" placeholder="Min Area (ha)">
-            <input [disabled]="typeSelect !== 'Plot'" type="text" id="max-area" name="max-area" placeholder="Max Area (ha)">
+            <input type="text" id="min-price" name="min-price" placeholder="Min Price (€)" [(ngModel)]="minPrice">
+            <input type="text" id="max-price" name="max-price" placeholder="Max Price (€)" [(ngModel)]="maxPrice">
+            <input type="text" id="min-size" name="min-size" [disabled]="type === '65afd0827c1611711ff207b5'" placeholder="Min Size (m2)" [(ngModel)]="minSize">
+            <input type="text" id="max-size" name="max-size" [disabled]="type === '65afd0827c1611711ff207b5'" placeholder="Max Size (m2)" [(ngModel)]="maxSize">
+            <input type="text" id="min-area" name="min-area" [disabled]="type !== '65afd0827c1611711ff207b5'" placeholder="Min Area (ha)" [(ngModel)]="minArea">
+            <input type="text" id="max-area" name="max-area" [disabled]="type !== '65afd0827c1611711ff207b5'" placeholder="Max Area (ha)" [(ngModel)]="maxArea">
         </div>
         <div>
-            <button type="button">Search</button>
+            <button type="button" (click)="browseItems(title, type, city, bedrooms, bathrooms, garages, minPrice, maxPrice, minSize, maxSize, minArea, maxArea)">Search</button>
         </div>
     </form>
+</div>
+<div class="row">
+    <div class="card" *ngFor="let item of items">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.title }}</h5>
+          <div class="resizable-container">
+            <img class="resizable-image" [src]="item.images[0]" alt="Property Image">
+          </div>
+          <div><i class="bi bi-cursor"></i><p class="card-text">{{ item.address.street }}, {{ item.address.city }}</p></div>
+          <p class="card-text">{{ item.type.name }}</p>
+          <div><p class="card-text">{{ item.price }}</p><i class="bi bi-currency-euro"></i></div>
+          <div class="attributes" [ngSwitch]="item.type.name">
+            <div><i class="bi bi-arrows-move"></i><p *ngSwitchCase="'Plot'" class="card-text">{{ item.area }}</p></div>
+            <div><i class="bi bi-arrows-move"></i><p *ngSwitchDefault class="card-text">{{ item.size }}</p></div>
+            <div><i class="bi bi-door-open"></i><p class="card-text">{{ item.bedrooms }}</p>  </div>
+            <div><i class="bi bi-droplet"></i><p class="card-text">{{ item.bathrooms }}</p></div>
+            <p class="card-text">{{ item.garages }}</p>  
+          </div>
+        </div>
+      </div>
 </div>
