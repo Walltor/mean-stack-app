@@ -3,6 +3,9 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">{{ item.title }}</h5>
+        <div class="resizable-container">
+          <img class="resizable-image" [src]="item.images[0]" alt="Property Image">
+        </div>
         <div><i class="bi bi-cursor"></i><p class="card-text">{{ item.address.street }}, {{ item.address.city }}</p></div>
         <p class="card-text">{{ item.type.name }}</p>
         <div><p class="card-text">{{ item.price }}</p><i class="bi bi-currency-euro"></i></div>

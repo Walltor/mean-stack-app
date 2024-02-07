@@ -35,16 +35,16 @@ class ItemController {
   //Main page search by type, state, min and max price
   static async searchItem(req, res) {
     try {
-      const { title, type, city, bedrooms, bathrooms, garages, minPrice, maxPrice, size, area, forsale } = req.query;
+      const { title, type, city, bedrooms, bathrooms, garages, minPrice, maxPrice, minSize, maxSize, minArea, maxArea } = req.query;
       
       const query = {};
 
       if (title) {
-      query.title = title;
+        query.title = title;
       }
       
       if (type) {
-      query.type = type;
+        query.type = type;
       }
 
       if (city) {
@@ -60,7 +60,7 @@ class ItemController {
       }
 
       if (garages) {
-        query.bedrooms = parseInt(bedrooms, 10);
+        query.garages = parseInt(garages, 10);
       }
 
       if (minPrice || maxPrice) {
@@ -73,16 +73,24 @@ class ItemController {
         }
       }
 
-      if (size) {
-        query.size = parseInt(size, 10);
+      if (minSize || maxSize) {
+        query.size = {};
+        if (minSize) {
+          query.size.$gte = parseInt(minSize, 10);
+        }
+        if (maxSize) {
+          query.size.$lte = parseInt(maxSize, 10);
+        }
       }
 
-      if (area) {
-        query.area = parseInt(area, 10);
-      }
-
-      if (forsale) {
-        query.forsale = forsale
+      if (minArea || maxArea) {
+        query.area = {};
+        if (minArea) {
+          query.area.$gte = parseInt(minArea, 10);
+        }
+        if (maxArea) {
+          query.area.$lte = parseInt(maxArea, 10);
+        }
       }
 
       const items = await ItemModel.find(query);
