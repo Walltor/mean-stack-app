@@ -14,6 +14,8 @@ import { FeaturedComponent } from './featured/featured.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AddItemComponent } from './admin-dashboard/add-item/add-item.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { SearchComponent } from './search/search.component';
     FeaturedComponent,
     HomeComponent,
     LoginComponent,
-    SearchComponent
+    SearchComponent,
+    AdminDashboardComponent,
+    AddItemComponent
   ],
   imports: [
     BrowserModule,
