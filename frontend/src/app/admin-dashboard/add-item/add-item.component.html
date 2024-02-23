@@ -1,0 +1,86 @@
+<div class="search-container">
+    <form class="text-center">
+        <div class="browse-row">
+            <input type="text" id="title" name="title" placeholder="Title" [(ngModel)]="title">
+            <select class="form-select" id="type" name="type" [(ngModel)]="type">
+                <option selected="All Types" value="">All Types</option>
+                <option *ngFor="let type of types" [value]="type._id">{{ type.name }}</option>
+            </select>
+            <select class="form-select" id="city" name="city" [(ngModel)]="city">
+                <option selected="All States" value="">All States</option>
+                <option>Cityville</option>
+                <option>Metropolis</option>
+                <option>Scenicview</option>
+                <option>Corporateville</option>
+                <option>Suburbia</option>
+                <option>Highrise City</option>
+                <option>Mountainville</option>
+            </select>
+            <input type="text" id="street" name="street" placeholder="Street" [(ngModel)]="street">
+        </div>
+        <div class="browse-row">
+            <select class="form-select" id="bedrooms" name="bedrooms" [disabled]="type === '65afd0827c1611711ff207b5'" [(ngModel)]="bedrooms">
+                <option selected="No. of bedrooms" [ngValue]="null">No. of bedrooms</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+            <select class="form-select" id="bathrooms" name="bathrooms" [disabled]="type === '65afd0827c1611711ff207b5'" [(ngModel)]="bathrooms">
+                <option selected="No. of bathrooms" [ngValue]="null">No. of bathrooms</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+            <select class="form-select" id="garages" name="garages" [disabled]="type === '65afd0827c1611711ff207b5'" [(ngModel)]="garages">
+                <option selected="No. of garages" [ngValue]="null">No. of garages</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+        </div>
+        <div class="browse-row">
+            <input type="text" id="price" name="price" placeholder="Price (€)" [(ngModel)]="price">
+            <input type="text" id="size" name="size" placeholder="Size (m2)" [(ngModel)]="size">
+            <input type="text" id="area" name="area" placeholder="Area (ha)" [(ngModel)]="area">
+        </div>
+        <div>
+            <input type="checkbox" name="forsale" id="forsale" value="value" [(ngModel)]="forsale">
+            <label for="forsale">For Sale</label>
+        </div>
+        <div>
+            <input type="checkbox" name="featured" id="featured" value="value" [(ngModel)]="featured">
+            <label for="featured">Featured</label>
+        </div>
+        <div>
+            <input type="file" multiple (change)="onFileChange($event)"/>
+        </div>
+        <br>
+            <ul>
+                <li *ngFor="let file of images">{{ file }}</li>
+            </ul>
+        <div>
+            <button (click)="createItem(); uploadImages()">Add</button>
+        </div>
+    </form>
+</div>
