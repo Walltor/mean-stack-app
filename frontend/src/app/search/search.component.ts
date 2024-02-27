@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SearchService } from './search.service';
+import { Component, OnInit } from '@angular/core'
+import { SearchService } from './search.service'
 import { Router } from '@angular/router'
 
 @Component({
@@ -9,13 +9,13 @@ import { Router } from '@angular/router'
 })
 export class SearchComponent implements OnInit{
 
-  types: any[] = [];
-  items: any[] = [];
-  title: string = '';
-  type: string = '';
-  city: string = '';
-  minPrice: number | null = null;
-  maxPrice: number | null = null;
+  types: any[] = []
+  items: any[] = []
+  title: string = ''
+  type: string = ''
+  city: string = ''
+  minPrice: number | null = null
+  maxPrice: number | null = null
 
   constructor(private searchService : SearchService, private router : Router) { }
 
@@ -25,12 +25,12 @@ export class SearchComponent implements OnInit{
         this.types = data
       },
       error => {
-        console.error('Error fetching types', error);
+        console.error('Error fetching types', error)
       }
     )
   }
 
   search() {
-    this.router.navigate(['/browse'], {queryParams: {title: this.title, type: this.type, city: this.city, minPrice: this.minPrice, maxPrice: this.maxPrice}});
+    this.router.navigate(['/browse'], {queryParams: {title: this.title, type: this.type, city: this.city, minPrice: this.minPrice, maxPrice: this.maxPrice}})
   }
 }
