@@ -168,13 +168,12 @@ class ItemController {
   // Update an item by ID
   static async updateItemById(req, res) {
     const itemId = req.params.id;
-    const { title, type, address, bedrooms, bathrooms, garages, price, size, area, forsale, featured, newItem } = req.body;
+    const { title, type, address, bedrooms, bathrooms, garages, price, size, area, forsale, featured } = req.body;
 
     try {
       const updatedItem = await ItemModel.findByIdAndUpdate(
         itemId,
-        { title, type, address, bedrooms, bathrooms, garages, price, size, area, forsale, featured, newItem },
-        { new: true }
+        { title, type, address, bedrooms, bathrooms, garages, price, size, area, forsale, featured }
       );
 
       if (!updatedItem) {

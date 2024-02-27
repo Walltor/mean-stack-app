@@ -91,6 +91,8 @@ export class AddItemComponent implements OnInit {
     )
   }
 
-  
+  backToDashboard() {
+    this.router.navigate(['/admin'])
+  }
 }
 
