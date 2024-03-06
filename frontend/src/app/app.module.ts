@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
@@ -16,6 +16,8 @@ import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AddItemComponent } from './admin-dashboard/add-item/add-item.component';
+import { AuthService } from './auth/auth.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { AddItemComponent } from './admin-dashboard/add-item/add-item.component'
     LoginComponent,
     SearchComponent,
     AdminDashboardComponent,
-    AddItemComponent
+    AddItemComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,10 @@ import { AddItemComponent } from './admin-dashboard/add-item/add-item.component'
     ButtonsModule,
     CarouselModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
