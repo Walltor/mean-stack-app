@@ -69,7 +69,6 @@ export class BrowseComponent implements OnInit {
     this.BrowseService.searchItem(title, type, city, bedrooms, bathrooms, garages, minPrice, maxPrice, minSize, maxSize, minArea, maxArea).subscribe(
       data => {
         this.items = data
-        console.log(data);
       },
       error => {
         console.error('Error fetching types', error);

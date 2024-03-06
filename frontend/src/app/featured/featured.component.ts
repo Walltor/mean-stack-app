@@ -25,7 +25,6 @@ export class FeaturedComponent {
     this.FeaturedService.getItems().subscribe(
       data => {
         this.items = data
-        console.log(data)
       },
       error => {
         console.error('Error fetching types', error);

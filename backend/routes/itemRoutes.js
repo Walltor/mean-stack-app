@@ -1,14 +1,15 @@
-const express = require('express');
-const ItemController = require('../controllers/itemController');
+const express = require('express')
+const ItemController = require('../controllers/itemController')
+const { authenticateToken, requireAdmin } = require('../middleware/authMiddleware')
 
-const router = express.Router();
+const router = express.Router()
 
-router.get('/items', ItemController.getAllItems);
-router.get('/items/search', ItemController.searchItem);
-router.get('/items/:id', ItemController.getItemById);
-router.post('/items', ItemController.createItem);
-router.post('/upload', ItemController.upload);
-router.put('/items/:id', ItemController.updateItemById);
-router.delete('/items/:id', ItemController.deleteItemById);
+router.get('/items', authenticateToken, requireAdmin, ItemController.getAllItems)
+router.get('/items/search', ItemController.searchItem)
+router.get('/items/:id', authenticateToken, requireAdmin, ItemController.getItemById)
+router.post('/items', authenticateToken, requireAdmin, ItemController.createItem)
+router.post('/upload', authenticateToken, requireAdmin, ItemController.upload)
+router.put('/items/:id', authenticateToken, requireAdmin, ItemController.updateItemById)
+router.delete('/items/:id', authenticateToken, requireAdmin, ItemController.deleteItemById)
 
-module.exports = router;
+module.exports = router
