@@ -1,6 +1,49 @@
-<h1>Admin Dashboard</h1>
+<div class="title-row">
+  <h1>Admin Dashboard</h1>
+  <button class="addItemBtn" (click)="redirect()">Add item</button>
+</div>
 <hr>
-<button class="addItemBtn" (click)="redirect()">Add item</button>
+<div *ngFor="let item of items; let i = index" [formGroup]="itemForms[i]">
+  <div>{{ itemForms[i].status }}</div>
+  <div *ngIf="itemForms[i].get('title')?.invalid && (itemForms[i].get('title')?.dirty || itemForms[i].get('title')?.touched)">
+    <span class="error" *ngIf="itemForms[i].get('title')?.errors?.['required']">Title is required.</span>
+    <span class="error" *ngIf="itemForms[i].get('title')?.errors?.['minlength']">Minimum of 5 characters are required.</span>
+    <span class="error" *ngIf="itemForms[i].get('title')?.errors?.['maxlength']">Exceeded maximum number of characters.</span>
+  </div>
+  <div *ngIf="itemForms[i].get('city')?.invalid && (itemForms[i].get('city')?.dirty || itemForms[i].get('city')?.touched)">
+    <span class="error" *ngIf="itemForms[i].get('city')?.errors?.['required']">City is required.</span>
+  </div>
+  <div *ngIf="itemForms[i].get('type')?.invalid && (itemForms[i].get('type')?.dirty || itemForms[i].get('type')?.touched)">
+    <span class="error" *ngIf="itemForms[i].get('type')?.errors?.['required']">Type is required.</span>
+  </div>
+  <div *ngIf="itemForms[i].get('price')?.invalid && (itemForms[i].get('price')?.dirty || itemForms[i].get('price')?.touched)">
+    <span class="error" *ngIf="itemForms[i].get('price')?.errors?.['required']">Price is required.</span>
+    <span class="error" *ngIf="itemForms[i].get('price')?.errors?.['pattern']">Must be a number.</span>
+    <span class="error" *ngIf="itemForms[i].get('price')?.errors?.['max']">Maximum price exceeded.</span>
+  </div>
+  <div *ngIf="itemForms[i].get('bedrooms')?.invalid && (itemForms[i].get('bedrooms')?.dirty || itemForms[i].get('bedrooms')?.touched)">
+    <span class="error" *ngIf="itemForms[i].get('bedrooms')?.errors?.['required']">Bedroom field is required.</span>
+  </div>
+  <div *ngIf="itemForms[i].get('bathrooms')?.invalid && (itemForms[i].get('bathrooms')?.dirty || itemForms[i].get('bathrooms')?.touched)">
+    <span class="error" *ngIf="itemForms[i].get('bathrooms')?.errors?.['required']">Bathroom field is required.</span>
+  </div>
+  <div *ngIf="itemForms[i].get('garages')?.invalid && (itemForms[i].get('garages')?.dirty || itemForms[i].get('garages')?.touched)">
+    <span class="error" *ngIf="itemForms[i].get('garages')?.errors?.['required']">Garage field is required.</span>
+  </div>
+  <div *ngIf="itemForms[i].get('street')?.invalid && (itemForms[i].get('street')?.dirty || itemForms[i].get('street')?.touched)">
+    <span class="error" *ngIf="itemForms[i].get('street')?.errors?.['required']">Street is required.</span>
+  </div>
+  <div *ngIf="itemForms[i].get('size')?.invalid && (itemForms[i].get('size')?.dirty || itemForms[i].get('size')?.touched)">
+    <span class="error" *ngIf="itemForms[i].get('size')?.errors?.['required']">Size is required.</span>
+    <span class="error" *ngIf="itemForms[i].get('size')?.errors?.['pattern']">Must be a number.</span>
+    <span class="error" *ngIf="itemForms[i].get('size')?.errors?.['max']">Maximum size exceeded.</span>
+  </div>
+  <div *ngIf="itemForms[i].get('area')?.invalid && (itemForms[i].get('area')?.dirty || itemForms[i].get('area')?.touched)">
+    <span class="error" *ngIf="itemForms[i].get('area')?.errors?.['required']">Area is required.</span>
+    <span class="error" *ngIf="itemForms[i].get('area')?.errors?.['pattern']">Must be a number.</span>
+    <span class="error" *ngIf="itemForms[i].get('area')?.errors?.['max']">Maximum area exceeded.</span>
+  </div>
+</div>
 <table>
     <thead>
       <tr>
@@ -15,27 +58,28 @@
         <th>Price</th>
         <th>Size</th>
         <th>Area</th>
-        <th>For sale</th>
+        <th>Sale</th>
         <th>Featured</th>
         <th>Settings</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of items">
-        <td>{{  item._id  }}</td>
+      <tr *ngFor="let item of items; let i = index" [formGroup]="itemForms[i]" >
+        <td class="id">{{ item._id }}</td>
         <td><span *ngIf="!item.editing">{{ item.title }}</span>
-          <input *ngIf="item.editing" [(ngModel)]="item.title" [value]="item.title">
+          <input *ngIf="item.editing" formControlName="title">
         </td>
         <td><span *ngIf="!item.editing">{{ item.type.name }}</span>
-          <select *ngIf="item.editing" [(ngModel)]="item.type._id">
-            <option *ngFor="let type of types" [value]="type._id">{{ type.name }}</option>
+          <select *ngIf="item.editing" formControlName="type">
+            <option *ngFor="let type of types" [value]="type._id" [selected]="type._id === item.type._id">{{ type.name }}</option>
           </select>
         </td>
         <td><span *ngIf="!item.editing">{{ item.address.street }}</span>
-          <input *ngIf="item.editing" [(ngModel)]="item.address.street">
+          <input *ngIf="item.editing" formControlName="street">
         </td>
         <td><span *ngIf="!item.editing">{{ item.address.city }}</span>
-          <select *ngIf="item.editing" [(ngModel)]="item.address.city">
+          <select *ngIf="item.editing" formControlName="city">
             <option>Cityville</option>
             <option>Metropolis</option>
             <option>Scenicview</option>
@@ -47,7 +91,7 @@
           </select>
         </td>
         <td><span *ngIf="!item.editing">{{ item.bedrooms }}</span>
-          <select *ngIf="item.editing" [(ngModel)]="item.bedrooms">
+          <select *ngIf="item.editing" formControlName="bedrooms">
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -61,7 +105,7 @@
           </select>
         </td>
         <td><span *ngIf="!item.editing">{{ item.bathrooms }}</span>
-          <select *ngIf="item.editing" [(ngModel)]="item.bathrooms">
+          <select *ngIf="item.editing" formControlName="bathrooms">
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -75,7 +119,7 @@
           </select>
         </td>
         <td><span *ngIf="!item.editing">{{ item.garages }}</span>
-          <select *ngIf="item.editing" [(ngModel)]="item.garages">
+          <select *ngIf="item.editing" formControlName="garages">
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -89,22 +133,25 @@
           </select>
         </td>
         <td><span *ngIf="!item.editing">{{ item.price }}</span>
-          <input *ngIf="item.editing" [(ngModel)]="item.price">
+          <input *ngIf="item.editing" formControlName="price">
         </td>
         <td><span *ngIf="!item.editing">{{ item.size }}</span>
-          <input *ngIf="item.editing" [(ngModel)]="item.size">
+          <input *ngIf="item.editing" formControlName="size">
         </td>
         <td><span *ngIf="!item.editing">{{ item.area }}</span>
-          <input *ngIf="item.editing" [(ngModel)]="item.area">
+          <input *ngIf="item.editing" formControlName="area">
         </td>
         <td><span *ngIf="!item.editing">{{ item.forsale ? 'Yes' : 'No' }}</span>
-          <input *ngIf="item.editing" type="checkbox" name="forsale" id="forsale" [(ngModel)]="item.forsale">
+          <input *ngIf="item.editing" type="checkbox" name="forsale" id="forsale" formControlName="forsale">
         </td>
         <td><span *ngIf="!item.editing">{{ item.featured ? 'Yes' : 'No' }}</span>
-          <input *ngIf="item.editing" type="checkbox" name="featured" id="featured" [(ngModel)]="item.featured">
+          <input *ngIf="item.editing" type="checkbox" name="featured" id="featured" formControlName="featured">
         </td>
         <td><button class="editItemBtn" *ngIf="!item.editing" (click)="toggleEditing(item)">Edit</button>
-          <button class="editItemBtn" *ngIf="item.editing" (click)="saveChanges(item)">Save</button>
+          <button class="editItemBtn" *ngIf="item.editing" (click)="saveChanges(item, i)">Save</button>
+          <button class="editItemBtn" *ngIf="item.editing" (click)="toggleEditing(item)">Cancel</button>
+        </td>
+        <td>
           <button class="deleteItemBtn" (click)="delete(item)">Delete</button>
         </td>
       </tr>

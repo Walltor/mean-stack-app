@@ -18,6 +18,8 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { AddItemComponent } from './admin-dashboard/add-item/add-item.component';
 import { AuthService } from './auth/auth.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ReactiveFormsModule } from '@angular/forms'
+
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppRoutingModule,
     ButtonsModule,
     CarouselModule.forRoot(),
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthService, multi: true }

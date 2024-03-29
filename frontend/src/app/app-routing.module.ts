@@ -7,22 +7,13 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { AddItemComponent } from './admin-dashboard/add-item/add-item.component'
 import { authGuard } from './auth/auth.guard'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
-import { NotFoundError } from 'rxjs'
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent },
   { path: 'browse', component: BrowseComponent },
-  { path: 'admin', component: AdminDashboardComponent, canActivate: [authGuard],
-    // children: [
-    //   { path: '**', component: PageNotFoundComponent }
-    // ]
-  },
-  { path: 'add-item', component: AddItemComponent, canActivate: [authGuard], 
-    // children: [
-    //   { path: '**', component: PageNotFoundComponent }
-    // ]
-  },
+  { path: 'admin', component: AdminDashboardComponent, canActivate: [authGuard] },
+  { path: 'add-item', component: AddItemComponent, canActivate: [authGuard] },
   { path: '**', component: PageNotFoundComponent }
 ]
 
