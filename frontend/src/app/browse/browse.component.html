@@ -2,10 +2,6 @@
     <form class="text-center">
         <div class="browse-row">
             <input type="text" id="title" name="title" placeholder="Title" [(ngModel)]="title">
-            <select class="form-select" id="type" name="type" [(ngModel)]="type">
-                <option selected="All Types" value="">All Types</option>
-                <option *ngFor="let type of types" [value]="type._id">{{ type.name }}</option>
-            </select>
             <select class="form-select" id="state" name="state" [(ngModel)]="city">
                 <option selected="All States" value="">All States</option>
                 <option>Cityville</option>
@@ -17,9 +13,15 @@
                 <option>Highrise City</option>
                 <option>Mountainville</option>
             </select>
+            <select class="form-select" id="type" name="type" [(ngModel)]="type">
+                <option selected="All Types" value="">All Types</option>
+                <option *ngFor="let type of types" [value]="type._id">{{ type.name }}</option>
+            </select>
+            <input type="text" id="min-price" name="min-price" placeholder="Min Price (€)" [(ngModel)]="minPrice">
+            <input type="text" id="max-price" name="max-price" placeholder="Max Price (€)" [(ngModel)]="maxPrice">
         </div>
-        <div class="browse-row">
-            <select class="form-select" id="bedrooms" name="bedrooms" [disabled]="type === '65afd0827c1611711ff207b5'" [(ngModel)]="bedrooms">
+        <div class="browse-row" *ngIf="type !== '65afd0827c1611711ff207b5'">
+            <select class="form-select" id="bedrooms" name="bedrooms" [(ngModel)]="bedrooms">
                 <option selected="No. of bedrooms" [ngValue]="null">No. of bedrooms</option>
                 <option>1</option>
                 <option>2</option>
@@ -32,7 +34,7 @@
                 <option>9</option>
                 <option>10</option>
             </select>
-            <select class="form-select" id="bathrooms" name="bathrooms" [disabled]="type === '65afd0827c1611711ff207b5'" [(ngModel)]="bathrooms">
+            <select class="form-select" id="bathrooms" name="bathrooms" [(ngModel)]="bathrooms">
                 <option selected="No. of bathrooms" [ngValue]="null">No. of bathrooms</option>
                 <option>1</option>
                 <option>2</option>
@@ -45,7 +47,7 @@
                 <option>9</option>
                 <option>10</option>
             </select>
-            <select class="form-select" id="garages" name="garages" [disabled]="type === '65afd0827c1611711ff207b5'" [(ngModel)]="garages">
+            <select class="form-select" id="garages" name="garages" [(ngModel)]="garages">
                 <option selected="No. of garages" [ngValue]="null">No. of garages</option>
                 <option>1</option>
                 <option>2</option>
@@ -58,14 +60,16 @@
                 <option>9</option>
                 <option>10</option>
             </select>
+            <input type="text" id="min-size" name="min-size" placeholder="Min Size (m2)" [(ngModel)]="minSize">
+            <input type="text" id="max-size" name="max-size" placeholder="Max Size (m2)" [(ngModel)]="maxSize">
         </div>
-        <div class="browse-row">
-            <input type="text" id="min-price" name="min-price" placeholder="Min Price (€)" [(ngModel)]="minPrice">
-            <input type="text" id="max-price" name="max-price" placeholder="Max Price (€)" [(ngModel)]="maxPrice">
-            <input type="text" id="min-size" name="min-size" [disabled]="type === '65afd0827c1611711ff207b5'" placeholder="Min Size (m2)" [(ngModel)]="minSize">
-            <input type="text" id="max-size" name="max-size" [disabled]="type === '65afd0827c1611711ff207b5'" placeholder="Max Size (m2)" [(ngModel)]="maxSize">
-            <input type="text" id="min-area" name="min-area" [disabled]="type !== '65afd0827c1611711ff207b5'" placeholder="Min Area (ha)" [(ngModel)]="minArea">
-            <input type="text" id="max-area" name="max-area" [disabled]="type !== '65afd0827c1611711ff207b5'" placeholder="Max Area (ha)" [(ngModel)]="maxArea">
+        <div *ngIf="(type === '6yy5afd0827c1611711ff207b5' || 'All Types')
+            && type !== '65afd0827c1611711ff207b1' 
+            && type !== '65afd0827c1611711ff207b2' 
+            && type !== '65afd0827c1611711ff207b3'
+            && type !== '65afd0827c1611711ff207b4'" class="browse-row-area">
+            <input type="text" id="min-area" name="min-area" placeholder="Min Area (ha)" [(ngModel)]="minArea">
+            <input type="text" id="max-area" name="max-area" placeholder="Max Area (ha)" [(ngModel)]="maxArea">
         </div>
         <div>
             <button type="button" (click)="browseItems(title, type, city, bedrooms, bathrooms, garages, minPrice, maxPrice, minSize, maxSize, minArea, maxArea)">Search</button>

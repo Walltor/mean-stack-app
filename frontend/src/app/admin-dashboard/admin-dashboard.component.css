@@ -1,48 +1,67 @@
-  table {
-    border-collapse: collapse;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
+table {
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
   
-  th, td {
-    padding: 4px;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
+th, td {
+  padding: 3px;
+  border: 1px solid #ddd;
+  width: 20%;
+  text-align: center;
+  justify-content: center;
+}
   
-  th {
-    text-align: center;
-    background-color: #f2f2f2;
-  }
+th {
+  background-color: #f2f2f2;
+}
   
-  tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-  .addItemBtn {
-    width: 10%;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
-    margin: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+.addItemBtn {
+  width: 10%;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-  .editItemBtn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+.editItemBtn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  margin: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-  .deleteItemBtn {
-    background-color: maroon;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    margin-left: 4px;
-    cursor: pointer;
-  }
+.deleteItemBtn {
+  background-color: maroon;
+  color: #fff;
+  border: none;
+  margin: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input {
+  width: 100%;
+}
+
+.title-row {
+  margin-top: 15px;
+  margin-left: 15px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.error {
+  color: crimson;
+}

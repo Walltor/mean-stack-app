@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { AdminDashboardService } from './admin-dashboard.service'
 import { Router } from '@angular/router'
 import { ObjectId } from 'mongodb'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 interface Item {
   _id: ObjectId
@@ -29,13 +30,16 @@ interface Item {
 export class AdminDashboardComponent implements OnInit {
   types: any[] = []
   items: any[] = []
+  itemForms: FormGroup[] = []
 
-  constructor(private AdminDashboardService : AdminDashboardService, private router: Router) {}
+  constructor(private AdminDashboardService : AdminDashboardService, private router: Router, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.AdminDashboardService.getItems().subscribe(
       data => {
         this.items = data
+        this.initItemForms()
+        this.fakeChange()
       },
       error => {
         console.error('Error fetching types', error)
@@ -48,7 +52,7 @@ export class AdminDashboardComponent implements OnInit {
       error => {
         console.error('Error fetching types', error)
       }
-    ) 
+    )
   }
 
   redirect() {
@@ -59,33 +63,68 @@ export class AdminDashboardComponent implements OnInit {
     item.editing = !item.editing
   }
 
-  saveChanges(item: Item) {
-    const itemData = {
-      title: item.title,
-      type: item.type,
-      address: {
-        street: item.street,
-        city: item.city,
-        country: 'Countryland'
-      },
-      bedrooms: item.bedrooms,
-      bathrooms: item.bathrooms,
-      garages: item.garages,
-      price: item.price,
-      size: item.size,
-      area: item.area,
-      forsale: item.forsale,
-      featured: item.featured
-    }
-    this.AdminDashboardService.updateItemById(item._id, item).subscribe(() => {
+  initItemForms() {
+    this.itemForms = this.items.map((item) =>
+      this.fb.group({
+        title: [item.title, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
+        city: [item.address.city, Validators.required], 
+        type: [item.type._id, Validators.required],
+        price: [item.price, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
+        bedrooms: [item.bedrooms, Validators.required],
+        bathrooms: [item.bathrooms, Validators.required],
+        garages: [item.garages, Validators.required],
+        street: [item.address.street, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
+        size: [item.size, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
+        area: [item.area, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
+        forsale:[item.forsale],
+        featured:[item.featured]
+      })
+    )
+    this.itemForms.forEach((itemForm : FormGroup) => {
+      itemForm.get('type')?.valueChanges.subscribe(value => {
+        if(value === '65afd0827c1611711ff207b5') {
+          itemForm.get('bedrooms')?.clearValidators()
+          itemForm.get('bathrooms')?.clearValidators()
+          itemForm.get('garages')?.clearValidators()
+          itemForm.get('street')?.clearValidators()
+          itemForm.get('size')?.clearValidators()
+          itemForm.get('area')?.setValidators(Validators.required)
+        } else {
+          itemForm.get('bedrooms')?.setValidators(Validators.required)
+          itemForm.get('bathrooms')?.setValidators(Validators.required)
+          itemForm.get('garages')?.setValidators(Validators.required)
+          itemForm.get('street')?.setValidators(Validators.required)
+          itemForm.get('size')?.setValidators(Validators.required)
+          itemForm.get('area')?.clearValidators()
+        }
+        itemForm.get('bedrooms')?.updateValueAndValidity()
+        itemForm.get('bathrooms')?.updateValueAndValidity()
+        itemForm.get('garages')?.updateValueAndValidity()
+        itemForm.get('street')?.updateValueAndValidity()
+        itemForm.get('size')?.updateValueAndValidity()
+        itemForm.get('area')?.updateValueAndValidity()
+      })
+    })
+  }
+
+  fakeChange(): void {
+    this.itemForms.forEach((itemForm : FormGroup) => {
+    const currentValue = itemForm.value
+    itemForm.setValue(currentValue)
+    })    
+  }
+
+  saveChanges(item: Item, index: number) {
+    const updatedItem = this.itemForms[index].value
+    this.AdminDashboardService.updateItemById(item._id, updatedItem).subscribe(() => {
       item.editing = false
-      window.location.reload();
+      window.location.reload()
     })
   }
 
   delete(item: Item) {
     this.AdminDashboardService.deleteItemById(item._id).subscribe(() => {
-      window.location.reload();
+      window.location.reload()  
     })
   }
 }
