@@ -1,15 +1,16 @@
 header {
-  background-color: #333;
+  background-color: steelblue;
   color: #fff;
   padding: 10px;
+  /* opacity: 70%; */
 }
-  
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-  
+
 .navbar-brand a {
   color: #fff;
   text-decoration: none;
@@ -17,27 +18,61 @@ header {
 }
 
 .navbar-links {
-  margin-left: auto;
+  margin-right: auto;
 }
-  
+
+.navbar-links a:hover, .admin-link a:hover {
+  color: orangered;
+  transition: 0.3s;
+}
+
+.admin-link {
+  margin-left: auto;
+  margin-top: 11px;
+  margin-bottom: auto;
+  margin-right: 24px;
+}
+
+.admin-link ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-link li {
+  margin-right: 15px;
+}
+
+.admin-link a {
+  color: white;
+  text-decoration: none;
+}
+
 .navbar-links ul {
   list-style: none;
   display: flex;
   margin: 0;
   padding: 0;
 }
-  
+
 .navbar-links li {
-  margin-right: 15px;
+  margin-right: 35px;
 }
-  
+
 .navbar-links a {
   color: #fff;
   text-decoration: none;
 }
 
+.navbar-logo {
+  width: 134px;
+  margin-left: 134px;
+  margin-right: 64px;
+}
+
 button {
-  background-color: #007bff;
+  background-color: orangered;
   color: #fff;
   padding: 10px;
   border: none;
@@ -47,4 +82,10 @@ button {
 
 .logout {
   margin-right: 10px;
+  margin-bottom: auto;
+}
+
+.bi-person-gear,
+.bi-arrow-bar-right {
+  margin-left: 4px;
 }

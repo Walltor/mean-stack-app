@@ -1,22 +1,91 @@
-<carousel [isAnimated]="isAnimated" [noWrap]="noWrapSlides" [showIndicators]="showIndicator" [itemsPerSlide]="itemsPerSlide" *ngIf="items && items.length">
-  <slide *ngFor="let item of items">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">{{ item.title }}</h5>
-        <div class="resizable-container">
-          <img class="resizable-image" [src]="item.images[0]" alt="Property Image">
-        </div>
-        <div><i class="bi bi-cursor"></i><p class="card-text">{{ item.address.street }}, {{ item.address.city }}</p></div>
-        <p class="card-text">{{ item.type.name }}</p>
-        <div><p class="card-text">{{ item.price }}</p><i class="bi bi-currency-euro"></i></div>
-        <div class="attributes" [ngSwitch]="item.type.name">
-          <div><i class="bi bi-arrows-move"></i><p *ngSwitchCase="'Plot'" class="card-text">{{ item.area }}</p></div>
-          <div><i class="bi bi-arrows-move"></i><p *ngSwitchDefault class="card-text">{{ item.size }}</p></div>
-          <div><i class="bi bi-door-open"></i><p class="card-text">{{ item.bedrooms }}</p>  </div>
-          <div><i class="bi bi-droplet"></i><p class="card-text">{{ item.bathrooms }}</p></div>
-          <p class="card-text">{{ item.garages }}</p>  
-        </div>
-      </div>
+<div class="container">
+  <div class="title">
+    <h1>Lorem ipsum dolor sit amet.</h1>
+    <hr>
+  </div>
+  <div class="row">
+    <div class="col-md-1" id="arrows">
+      <h1 class="prev"><i class="bi bi-chevron-left"></i></h1>
     </div>
-  </slide>
-</carousel>
+    <div class="col-md-10">
+      <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+        <div ngxSlickItem *ngFor="let item of items; let i = index" class="slide">
+          <div class="container">
+            <div class="card">
+              <div class="image-box">
+                <input type="image" (click)="viewDetails(item._id)" class="resizable-image" [src]="item.images[0]"
+                  alt="Property Image" />
+              </div>
+              <div class="card-body">
+                <div class="card-title">
+                  <p class="card-text">{{ item.title }}</p>
+                </div>
+                <div class="attributes">
+                  <div *ngIf="item.address.street !== null">
+                    <p class="card-text"><i class="bi bi-geo-alt"></i>{{ item.address.street }}, {{ item.address.city}}
+                    </p>
+                  </div>
+                  <div *ngIf="item.address.street === null">
+                    <p class="card-text"><i class="bi bi-geo-alt"></i>{{ item.address.city }}</p>
+                  </div>
+                </div>
+                <div class="attributes">
+                  <div class="types" *ngFor="let type of item.types; let i = index">
+                    <div>
+                      <p class="card-text">{{ type.name }}</p>
+                    </div>
+                    <div *ngIf="item.types.length > 1 && i !== item.types.length-1">
+                      <p class="card-text">, </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="attributes">
+                  <p class="card-text">{{ item.price }} €</p>
+                </div>
+              </div>
+              <div *ngIf="i % 2 === 0">
+                <div class="attributes-details">
+                  <div *ngFor="let type of item.types">
+                    <div *ngIf="type.name === 'Plot'" class="attributes">
+                      <p class="card-text"><i class="bi bi-arrows-move"></i>{{ item.area }} m<sup>2</sup></p>
+                    </div>
+                  </div>
+                  <div class="attributes" *ngIf="item.size !== null" class="attributes">
+                    <p class="card-text"><i class="bi bi-arrows-angle-expand"></i>{{ item.size }} m<sup>2</sup></p>
+                  </div>
+                  <div class="attributes" *ngIf="item.bedrooms !== null">
+                    <p class="card-text"><i class="bi bi-door-open"></i>{{ item.bedrooms }}</p>
+                  </div>
+                  <div class="attributes" *ngIf="item.bathrooms !== null">
+                    <p class="card-text"><i class="bi bi-droplet"></i>{{ item.bathrooms }}</p>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="i % 2 === 1">
+                <div class="attributes-details-other">
+                  <div *ngFor="let type of item.types">
+                    <div *ngIf="type.name === 'Plot'" class="attributes">
+                      <p class="card-text"><i class="bi bi-arrows-move"></i>{{ item.area }} m<sup>2</sup></p>
+                    </div>
+                  </div>
+                  <div class="attributes" *ngIf="item.size !== null" class="attributes">
+                    <p class="card-text"><i class="bi bi-arrows-angle-expand"></i>{{ item.size }} m<sup>2</sup></p>
+                  </div>
+                  <div class="attributes" *ngIf="item.bedrooms !== null">
+                    <p class="card-text"><i class="bi bi-door-open"></i>{{ item.bedrooms }}</p>
+                  </div>
+                  <div class="attributes" *ngIf="item.bathrooms !== null">
+                    <p class="card-text"><i class="bi bi-droplet"></i>{{ item.bathrooms }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ngx-slick-carousel>
+    </div>
+    <div class="col-md-1" id="arrows">
+      <h1 class="next"><i class="bi bi-chevron-right"></i></h1>
+    </div>
+  </div>
+</div>

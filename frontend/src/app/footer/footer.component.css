@@ -1,11 +1,30 @@
 footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+  background-color: darkblue;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.navbar-links ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+.navbar-links li {
+  margin-right: 35px;
+  margin-top: 10px;
+  margin-bottom: 10px
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+}

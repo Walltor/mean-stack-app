@@ -1,27 +1,32 @@
-<div class="search-container">
-    <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h1>
-    <h3>Nunc posuere odio at commodo vestibulum. Sed eget semper nunc, non varius eros.</h3>
-    <hr>
-    <form class="text-center">
-        <div>
-            <select class="form-select" id="type" name="type" [(ngModel)]="type">
-                <option selected="All Types" value="">All Types</option>
-                <option *ngFor="let type of types" [value]="type._id">{{ type.name }}</option>
-            </select>
-            <select class="form-select" id="state" name="state" [(ngModel)]="city">
-                <option selected="All States" value="">All States</option>
-                <option>Cityville</option>
-                <option>Metropolis</option>
-                <option>Scenicview</option>
-                <option>Corporateville</option>
-                <option>Ruralville</option>
-                <option>Suburbia</option>
-                <option>Highrise City</option>
-                <option>Mountainville</option>
-            </select>
-            <input type="text" id="min-price" name="min-price" placeholder="Min Price (€)">
-            <input type="text" id="max-price" name="max-price" placeholder="Max Price (€)">
-            <button type="button" (click)="search()">Search</button>
-        </div>  
-    </form>
-</div>
+<body>
+    <div class="container">
+        <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+        <h5>Sed euismod laoreet justo, vel condimentum magna. Donec iaculis urna nec odio eleifend pretium.</h5>
+        <div class="short-hr">
+            <hr>
+        </div>
+        <br>
+        <form class="text-center">
+            <div>
+                <select class="form-select" id="type" name="type" [(ngModel)]="itemTypes">
+                    <option selected="All Types" value="">All Types</option>
+                    <option *ngFor="let type of types" [value]="type._id">{{ type.name }}</option>
+                </select>
+                <select class="form-select" id="state" name="state" [(ngModel)]="city">
+                    <option selected="All States" value="">All States</option>
+                    <option>Cityville</option>
+                    <option>Metropolis</option>
+                    <option>Scenicview</option>
+                    <option>Corporateville</option>
+                    <option>Ruralville</option>
+                    <option>Suburbia</option>
+                    <option>Highrise City</option>
+                    <option>Mountainville</option>
+                </select>
+                <input type="text" id="min-price" name="min-price" placeholder="Min Price (€)">
+                <input type="text" id="max-price" name="max-price" placeholder="Max Price (€)">
+                <button type="button" (click)="search()"><i class="bi bi-search"></i> Search</button>
+            </div>
+        </form>
+    </div>
+</body>

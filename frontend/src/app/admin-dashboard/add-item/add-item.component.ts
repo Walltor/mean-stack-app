@@ -28,6 +28,8 @@ export class AddItemComponent implements OnInit {
   formData = new FormData
   myForm !: FormGroup
   fileError: string | null = null
+  previewImages: string[] = []
+  storage = 'http://localhost:3000/uploads/'
 
   constructor(private addItemService : AddItemService, private router : Router, private fb: FormBuilder) {}
 
@@ -46,8 +48,15 @@ export class AddItemComponent implements OnInit {
           this.fileError = 'Invalid file type.'
           return
         }
-        this.images.push(Date.now() + '-' + files[i].name)
+        this.images.push('http://localhost:3000/uploads/' + files[i].name)
         this.formData.append('images', files[i])
+        if (file) {
+          const reader = new FileReader()
+          reader.onload = () => {
+              this.previewImages.push(reader.result as string)
+          };
+          reader.readAsDataURL(files[i])
+        }
       }
       this.fileError = null
     }
@@ -72,6 +81,8 @@ export class AddItemComponent implements OnInit {
       street: [{ value: '', disabled: false }, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
       size: [{ value: '', disabled: false }, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
       area: [{ value: '', disabled: false }, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
+      featured: [{ value: false, disabled: false}],
+      forsale: [{ value: false, disabled: false}]
     })
     this.myForm.get('type')?.valueChanges.subscribe(value => {
       if(value === '65afd0827c1611711ff207b5') {
@@ -128,8 +139,8 @@ export class AddItemComponent implements OnInit {
       price: this.myForm.get('price')?.value,
       size: this.myForm.get('size')?.value,
       area: this.myForm.get('area')?.value,
-      forsale: this.forsale,
-      featured: this.featured,
+      forsale: this.myForm.get('forsale')?.value,
+      featured: this.myForm.get('featured')?.value,
       images: this.images
     }
     
