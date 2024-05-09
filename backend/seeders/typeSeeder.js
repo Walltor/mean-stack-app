@@ -5,11 +5,11 @@ mongoose.connect('mongodb://localhost:27017/meanstackapp', { useNewUrlParser: tr
 
 // Type seed data
 const types = [
-    { _id: '65afd0827c1611711ff207b1', name: 'House' },
-    { _id: '65afd0827c1611711ff207b2', name: 'Apartment' },
-    { _id: '65afd0827c1611711ff207b3', name: 'Villa' },
-    { _id: '65afd0827c1611711ff207b4', name: 'Office'},
-    { _id: '65afd0827c1611711ff207b5', name: 'Plot'}
+    { _id: '000000000000000000000001', name: 'House' },
+    { _id: '000000000000000000000002', name: 'Apartment' },
+    { _id: '000000000000000000000003', name: 'Villa' },
+    { _id: '000000000000000000000004', name: 'Office'},
+    { _id: '000000000000000000000005', name: 'Plot'}
 ]
 
 // Function to seed types 

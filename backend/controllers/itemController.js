@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const ItemModel = require('../models/item.js')
 const TypeModel = require('../models/type.js')
+const UtilityModel = require('../models/utility.js')
 const express = require('express')
 const Router = express.Router()
 const multer = require('multer')
@@ -11,7 +12,7 @@ const fs = require('fs')
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const uploadDir = path.join(__dirname, '..', 'uploads')
-
+    
     fs.access(uploadDir, (err) => {
       if (err) {
         fs.mkdir(uploadDir, {recursive: true}, err => {
@@ -26,7 +27,7 @@ const storage = multer.diskStorage({
     })
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
+    cb(null, file.originalname)
   }
 })
 
@@ -37,7 +38,7 @@ class ItemController {
   // Get all items
   static async getAllItems(req, res) {
     try {
-      const items = await ItemModel.find({}).populate('type', 'name')
+      const items = await ItemModel.find({}).populate('types', 'name').populate('utilities', 'name')
       res.status(200).json(items)
     } catch (error) {
       console.error('Error:', error)
@@ -47,10 +48,10 @@ class ItemController {
 
   // Get a specific item by ID
   static async getItemById(req, res) {
-    const itemId = req.params.id
+    const itemId = req.params._id
 
     try {
-      const item = await ItemModel.findById(itemId)
+      const item = await ItemModel.findById(itemId).populate('types', 'name').populate('utilities', 'name')
 
       if (!item) {
         return res.status(404).json({ error: 'Item not found' })
@@ -62,23 +63,35 @@ class ItemController {
       res.status(500).json({ error: 'Internal Server Error' })
     }
   }
+  
+  //Get featured items
+  static async getFeatured(req, res) {
+    try {
+      const items = await ItemModel.find({ featured: true }).populate('types', 'name').populate('utilities', 'name')
+      res.status(200).json(items)
+    } catch (error) {
+        console.error('Error:', error)
+        res.status(500).json({ error: 'Internal Server Error' })
+    }
+  }
 
-  //Main page search by type, state, min and max price
+  //Main page search by types, state, min and max price
   static async searchItem(req, res) {
     try {
-      const { title, type, city, bedrooms, bathrooms, garages, minPrice, maxPrice, minSize, maxSize, minArea, maxArea } = req.query
+      const { title, types, city, bedrooms, bathrooms, minPrice, maxPrice, minSize, maxSize, minArea, maxArea, forsale, utilities } = req.query
       
       const query = {}
 
       if (title) {
-        query.title = title
+        query.title = { $regex: new RegExp(title, 'i') };
       }
       
-      if (type) {
-        query.type = type
+      if (types) {
+        const typeIds = JSON.parse(types)
+        query.types = { $all: typeIds }
       }
-
-      if (city) {
+      
+      if (city) { 
         query['address.city'] = city
       }
 
@@ -88,10 +101,6 @@ class ItemController {
 
       if (bathrooms) {
         query.bathrooms = parseInt(bathrooms, 10)
-      }
-
-      if (garages) {
-        query.garages = parseInt(garages, 10)
       }
 
       if (minPrice || maxPrice) {
@@ -124,9 +133,16 @@ class ItemController {
         }
       }
 
-      const items = await ItemModel.find(query)
-      console.log(items)
+      if (forsale) {
+        query.forsale = forsale
+      }
 
+      if (utilities) {
+        const utilitiesId = JSON.parse(utilities)
+        query.utilities = { $all: utilitiesId }
+      }
+
+      const items = await ItemModel.find(query).populate('types', 'name').populate('utilities', 'name')
       res.status(200).json(items)
     } catch (error) {
       console.error('Error retrieving items:', error)
@@ -136,10 +152,10 @@ class ItemController {
 
   // Create a new item
   static async createItem(req, res) {
-    const { title, type, address, bedrooms, bathrooms, garages, price, size, area, forsale, featured, images } = req.body
+    const { title, types, address, bedrooms, bathrooms, price, size, area, forsale, featured, description, utilities, images } = req.body
 
     try {
-      const newItem = new ItemModel({ title, type, address, bedrooms, bathrooms, garages, price, size, area, forsale, featured, images })
+      const newItem = new ItemModel({ title, types, address, bedrooms, bathrooms, price, size, area, forsale, featured, description, utilities, images })
       const savedItem = await newItem.save()
 
       res.status(201).json(savedItem)
@@ -157,23 +173,22 @@ class ItemController {
         }
         const files = req.files
         if (!files) {
-          return res.status(400).json({ message: 'Please choose files' })
+          return res.status(400).json({ message : 'Please choose files' })
         }
         // If files are uploaded successfully, send a success response
         res.status(200).json({ message: 'Files uploaded successfully', files: files })
       })
     }
   
-
   // Update an item by ID
   static async updateItemById(req, res) {
     const itemId = req.params.id
-    const { title, type, address, bedrooms, bathrooms, garages, price, size, area, forsale, featured } = req.body
+    const { title, types, address, bedrooms, bathrooms, price, size, area, forsale, featured, description, utilities } = req.body
 
     try {
       const updatedItem = await ItemModel.findByIdAndUpdate(
         itemId,
-        { title, type, address, bedrooms, bathrooms, garages, price, size, area, forsale, featured }
+        { title, types, address, bedrooms, bathrooms, price, size, area, forsale, featured, description, utilities }
       )
 
       if (!updatedItem) {

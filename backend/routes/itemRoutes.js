@@ -4,12 +4,13 @@ const { authenticateToken, requireAdmin } = require('../middleware/authMiddlewar
 
 const router = express.Router()
 
-router.get('/items', authenticateToken, requireAdmin, ItemController.getAllItems)
+router.get('/items', ItemController.getAllItems)
 router.get('/items/search', ItemController.searchItem)
-router.get('/items/:id', authenticateToken, requireAdmin, ItemController.getItemById)
-router.post('/items', authenticateToken, requireAdmin, ItemController.createItem)
-router.post('/upload', authenticateToken, requireAdmin, ItemController.upload)
-router.put('/items/:id', authenticateToken, requireAdmin, ItemController.updateItemById)
-router.delete('/items/:id', authenticateToken, requireAdmin, ItemController.deleteItemById)
+router.get('/featured', ItemController.getFeatured)
+router.get('/items/:_id', ItemController.getItemById)
+router.post('/items', ItemController.createItem)
+router.post('/upload', ItemController.upload)
+router.put('/items/:id', ItemController.updateItemById)
+router.delete('/items/:id', ItemController.deleteItemById)
 
 module.exports = router
