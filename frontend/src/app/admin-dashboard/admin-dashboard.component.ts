@@ -2,23 +2,39 @@ import { Component, OnInit } from '@angular/core'
 import { AdminDashboardService } from './admin-dashboard.service'
 import { Router } from '@angular/router'
 import { ObjectId } from 'mongodb'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 interface Item {
   _id: ObjectId
   title: string
-  type: string
-  street: string
-  city: string
+  types: Type[]
+  street: Address['street']
+  city: Address['city']
   bedrooms: number
   bathrooms: number
   garages: number
   price: number
   size: number
   area: number
+  description: string
   forsale: boolean
   featured: boolean
-  editing: boolean
+  utilities: Utility[]
+}
+
+interface Address {
+  street: string,
+  city: string
+}
+
+interface Type {
+  _id: ObjectId
+  name: string
+}
+
+interface Utility {
+  _id: ObjectId
+  name: string
 }
 
 @Component({
@@ -30,9 +46,11 @@ interface Item {
 export class AdminDashboardComponent implements OnInit {
   types: any[] = []
   items: any[] = []
+  utilities: any[] = []
   itemForms: FormGroup[] = []
+  showDiv: boolean[] = []
 
-  constructor(private AdminDashboardService : AdminDashboardService, private router: Router, private fb: FormBuilder) {}
+  constructor(private AdminDashboardService: AdminDashboardService, private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.AdminDashboardService.getItems().subscribe(
@@ -43,15 +61,40 @@ export class AdminDashboardComponent implements OnInit {
       },
       error => {
         console.error('Error fetching types', error)
-      }
-    ) 
+      })
     this.AdminDashboardService.getTypes().subscribe(
       data => {
         this.types = data
       },
       error => {
         console.error('Error fetching types', error)
-      }
+      })
+    this.AdminDashboardService.getUtilities().subscribe(
+      data => {
+        this.utilities = data
+      },
+      error => {
+        console.error('Error fetching types', error)
+      })
+  }
+
+  initItemForms() {
+    this.itemForms = this.items.map((item) =>
+      this.formBuilder.group({
+        title: [item.title, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
+        types: [item.types],
+        city: [item.address.city, Validators.required],
+        price: [item.price, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
+        bedrooms: [item.bedrooms, Validators.required],
+        bathrooms: [item.bathrooms, Validators.required],
+        street: [item.address.street, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
+        size: [item.size, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
+        area: [item.area, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
+        description: [item.description, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
+        forsale: [item.forsale],
+        featured: [item.featured],
+        utilities: [item.utilities],
+      })
     )
   }
 
@@ -59,72 +102,79 @@ export class AdminDashboardComponent implements OnInit {
     this.router.navigate(['/add-item'])
   }
 
-  toggleEditing(item : Item) {
-    item.editing = !item.editing
+  checkType(types: Type[], typeId: ObjectId): boolean {
+    return types.some(type => type._id === typeId)
   }
 
-  initItemForms() {
-    this.itemForms = this.items.map((item) =>
-      this.fb.group({
-        title: [item.title, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
-        city: [item.address.city, Validators.required], 
-        type: [item.type._id, Validators.required],
-        price: [item.price, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
-        bedrooms: [item.bedrooms, Validators.required],
-        bathrooms: [item.bathrooms, Validators.required],
-        garages: [item.garages, Validators.required],
-        street: [item.address.street, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
-        size: [item.size, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
-        area: [item.area, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
-        forsale:[item.forsale],
-        featured:[item.featured]
-      })
-    )
-    this.itemForms.forEach((itemForm : FormGroup) => {
-      itemForm.get('type')?.valueChanges.subscribe(value => {
-        if(value === '65afd0827c1611711ff207b5') {
-          itemForm.get('bedrooms')?.clearValidators()
-          itemForm.get('bathrooms')?.clearValidators()
-          itemForm.get('garages')?.clearValidators()
-          itemForm.get('street')?.clearValidators()
-          itemForm.get('size')?.clearValidators()
-          itemForm.get('area')?.setValidators(Validators.required)
-        } else {
-          itemForm.get('bedrooms')?.setValidators(Validators.required)
-          itemForm.get('bathrooms')?.setValidators(Validators.required)
-          itemForm.get('garages')?.setValidators(Validators.required)
-          itemForm.get('street')?.setValidators(Validators.required)
-          itemForm.get('size')?.setValidators(Validators.required)
-          itemForm.get('area')?.clearValidators()
-        }
-        itemForm.get('bedrooms')?.updateValueAndValidity()
-        itemForm.get('bathrooms')?.updateValueAndValidity()
-        itemForm.get('garages')?.updateValueAndValidity()
-        itemForm.get('street')?.updateValueAndValidity()
-        itemForm.get('size')?.updateValueAndValidity()
-        itemForm.get('area')?.updateValueAndValidity()
-      })
-    })
+  pushType(item: Item, type: Type, event: any) {
+    const isChecked = event.target.checked
+    const index = item.types.findIndex(t => t._id === type._id)
+    if (isChecked && index === -1) {
+      item.types.push(type)
+    } else if (!isChecked && index !== -1) {
+      item.types.splice(index, 1)
+    }
+    console.log(item.types)
+  }
+
+  logItem(item: Item) {
+    console.log
+  }
+
+  pushUtility(item: Item, utility: Utility, event: any) {
+    const isChecked = event.target.checked
+    const index = item.utilities.findIndex(u => u._id === utility._id)
+    if (isChecked && index === -1) {
+      item.utilities.push(utility)
+    } else if (!isChecked && index != -1) {
+      item.utilities.splice(index, 1)
+    }
+    console.log(item.utilities)
+  }
+
+  itemDetails(index: number) {
+    this.showDiv[index] = !this.showDiv[index]
   }
 
   fakeChange(): void {
-    this.itemForms.forEach((itemForm : FormGroup) => {
-    const currentValue = itemForm.value
-    itemForm.setValue(currentValue)
-    })    
+    this.itemForms.forEach((itemForm: FormGroup) => {
+      const currentValue = itemForm.value
+      itemForm.setValue(currentValue)
+    })
   }
 
   saveChanges(item: Item, index: number) {
     const updatedItem = this.itemForms[index].value
-    this.AdminDashboardService.updateItemById(item._id, updatedItem).subscribe(() => {
-      item.editing = false
-      window.location.reload()
+    const updatedTypes = updatedItem.types.map((type: Type) => type._id);
+    const updatedUtilities = updatedItem.utilities.map((utility: Utility) => utility._id);
+
+    const itemToSave = {
+      title: updatedItem.title,
+      types: updatedTypes,
+      address: {
+        street: updatedItem.street,
+        city: updatedItem.city,
+        country: 'Countryland'
+      },
+      price: updatedItem.price,
+      bedrooms: updatedItem.bedrooms,
+      bathrooms: updatedItem.bathrooms,
+      size: updatedItem.size,
+      area: updatedItem.area,
+      description: updatedItem.description,
+      forsale: updatedItem.forsale,
+      featured: updatedItem.featured,
+      utilities: updatedUtilities
+    };
+
+    this.AdminDashboardService.updateItemById(item._id, itemToSave).subscribe(() => {
+      console.log(itemToSave)
     })
   }
 
   delete(item: Item) {
     this.AdminDashboardService.deleteItemById(item._id).subscribe(() => {
-      window.location.reload()  
+      window.location.reload()
     })
   }
 }

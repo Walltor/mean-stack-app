@@ -1,0 +1,169 @@
+<div class="item-details">
+  <div class="container">
+    <div class="title">
+      <div class="title-row">
+        <h3>{{ item.title }}</h3>
+        <div class="forsale" *ngIf="item.forsale">
+          <h4>For sale</h4>
+        </div>
+      </div>
+      <div class="title-row">
+        <div class="price">
+          <h4>{{ item.price }} €</h4>
+        </div>
+      </div>
+    </div>
+    <div class="attributes-row">
+      <div class="attribute" *ngFor="let type of item.types">
+        <h4 *ngIf="type.name === 'Plot'" class="icon-row"><i class="bi bi-arrows-move"></i>{{ item.area }}</h4>
+      </div>
+      <div class="attribute" *ngFor="let type of item.types">
+        <h4 class="icon-row"
+          *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)"><i
+            class="bi bi-arrows-angle-expand"></i>{{ item.size }}</h4>
+      </div>
+      <div class="attribute" *ngFor="let type of item.types">
+        <h4 class="icon-row"
+          *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)"><i
+            class="bi bi-door-open"></i>{{ item.bedrooms }}</h4>
+      </div>
+      <div class="attribute" *ngFor="let type of item.types">
+        <h4 class="icon-row"
+          *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)"><i
+            class="bi bi-droplet"></i>{{ item.bathrooms }}</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-1" id="arrows">
+        <h3 class="prev"><i class="bi bi-chevron-left"></i></h3>
+      </div>
+      <div class="col-md-10">
+        <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+          <div ngxSlickItem *ngFor="let image of item.images; let i = index" class="slide">
+            <div class="container">
+              <div class="card">
+                <img class="resizable-image" [src]="item.images[i]" alt="Property Image">
+              </div>
+            </div>
+          </div>
+        </ngx-slick-carousel>
+      </div>
+      <div class="col-md-1" id="arrows">
+        <h3 class="next"><i class="bi bi-chevron-right"></i></h3>
+      </div>
+    </div>
+    <div class="container">
+      <h5>{{ item.description }}</h5>
+    </div>
+    <div class="attributes-row-bottom">
+      <div class="attributes-row">
+        <div class="attribute-bottom">
+          <h5 style="font-weight: bold">Country:</h5>
+        </div>
+        <div class="attribute-bottom">
+          <h5>{{ item.address.country }}</h5>
+        </div>
+      </div>
+      <div class="attributes-row">
+        <div class="attribute-bottom">
+          <h5 style="font-weight: bold">Province/State:</h5>
+        </div>
+        <div class="attribute-bottom">
+          <div *ngIf="item.address.street === null">
+            <h5><i class="bi bi-geo-alt"></i>{{ item.address.city}}</h5>
+          </div>
+          <div *ngIf="item.address.street !== null">
+            <h5><i class="bi bi-geo-alt"></i>{{ item.address.street }}, {{ item.address.city}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="title" style="padding: 0;">
+      <div class="title-row">
+        <div class="toggle-switch">
+          <button [ngClass]="{ 'active': overview }" name="overview" id="overview"
+            (click)="toggleView()"><h4>Overview</h4></button>
+          <button [ngClass]="{ 'active': !overview }" name="overview" id="overview"
+            (click)="toggleView()"><h4>Features</h4></button>
+        </div>
+      </div>
+    </div>
+    <div class="overview-container" *ngIf="overview">
+      <div class="attributes-row-bottom">
+        <div class="attributes-row">
+          <div class="attribute-bottom">
+            <h5 style="font-weight: bold;">Property ID:</h5>
+          </div>
+          <div class="attribute-bottom">
+            <h5>{{ item._id }}</h5>
+          </div>
+        </div>
+        <div class="attributes-row">
+          <div class="attributes-row">
+            <div class="attribute-bottom">
+              <h5 style="font-weight: bold">Property type:</h5>
+            </div>
+            <div class="attribute-bottom" *ngFor="let type of item.types; let i = index">
+              <div class="types">
+                <h5>{{ type.name }}</h5>
+                <h5 *ngIf="item.types.length > 1 && i !== item.types.length-1">, </h5>
+              </div>
+            </div>
+          </div>
+          <div class="attribute-bottom">
+            <h5>{{ item.types.name }}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="attributes-row-bottom">
+        <div class="attributes-row">
+          <div class="attribute-bottom">
+            <h5 style="font-weight: bold">Price:</h5>
+          </div>
+          <div class="attribute-bottom">
+            <h5>{{ item.price }} €</h5>
+          </div>
+        </div>
+        <div class="attributes-row">
+          <div class="attribute-bottom">
+            <h5 style="font-weight: bold">For sale:</h5>
+          </div>
+          <div class="attribute-bottom">
+            <h5>{{ item.overview ? 'Yes' : 'No' }}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="attributes-row-bottom" *ngFor="let type of item.types">
+        <div class="attributes-row" *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)">
+          <div class="attribute-bottom">
+            <h5 style="font-weight: bold">Property size:</h5>
+          </div>
+          <div class="attribute-bottom">
+            <h5>{{ item.size }}</h5>
+          </div>
+        </div>
+        <div class="attributes-row" *ngIf="type.name === 'Plot'">
+          <div class="attribute-bottom">
+            <h5 style="font-weight: bold">Property area:</h5>
+          </div>
+          <div class="attribute-bottom">
+            <h5>{{ item.area }}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="features-container" *ngIf="!overview">
+      <div class="types">
+        <div class="attributes-row" *ngFor="let utility of item.utilities; let i = index">
+          <div class="attribute-bottom">
+            <h5 style="font-weight: bold;"><i class="bi bi-check2-square"></i></h5>
+          </div>
+          <div class="attribute-bottom">
+            <h5 style="font-weight: bold;">{{ utility.name }}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

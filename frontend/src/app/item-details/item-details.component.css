@@ -1,0 +1,140 @@
+.container {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.item-details {
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+.carousel-container {
+  justify-content: center;
+}
+
+.card {
+  margin: 0 auto;
+  display: flex;
+  border-radius: 0px;
+  border: 0px;
+}
+
+.resizable-image {
+  height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+.title {
+  background: darkblue;
+  padding: 20px;
+  color: white;
+}
+
+.title-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.attributes-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.attribute {
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.attribute-bottom {
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.attribute-bottom-name {
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.attributes-row-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forsale {
+  margin-left: 25px;
+  background: orangered;
+  padding-top: 8px;
+  padding-left: 6px;
+  padding-right: 6px;
+  border-radius: 3px;
+}
+
+.bi {
+  color: orangered;
+}
+
+.icon-row {
+  font-weight: bold;
+}
+
+.prev {
+  float: right;
+}
+
+.next {
+  float: left;
+}
+
+#arrows {
+  margin-top: 250px;
+}
+
+.bi:not(.bi-check2-square) {
+  margin-right: 10px;
+}
+
+.bi-check2-square {
+  margin-left: 10px;
+}
+
+.types {
+  display: flex;
+  flex-direction: row;
+}
+
+.toggle-switch {
+  display: flex;
+}
+
+.toggle-switch button {
+  padding: 10px 20px;
+  padding-top: 15px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background-color: darkblue;
+  color: white;
+  transition: 0.3s;
+}
+
+.toggle-switch button.active {
+  background-color: orangered;
+  color: white;
+  transition: 0.3s;
+}
+
+.toggle-switch button:hover {
+  background-color: steelblue;
+}
+
+.overview-container,
+.features-container {
+  min-height: 240px;
+}

@@ -1,98 +1,190 @@
-<div class="search-container">
-    <form class="text-center">
-        <div class="browse-row">
+<div class="search-row">
+  <div class="container">
+    <div class="search-container">
+      <form class="text-center">
+        <div class="row">
+          <div class="col-md-4">
             <input type="text" id="title" name="title" placeholder="Title" [(ngModel)]="title">
             <select class="form-select" id="state" name="state" [(ngModel)]="city">
-                <option selected="All States" value="">All States</option>
-                <option>Cityville</option>
-                <option>Metropolis</option>
-                <option>Scenicview</option>
-                <option>Corporateville</option>
-                <option>Ruralville</option>
-                <option>Suburbia</option>
-                <option>Highrise City</option>
-                <option>Mountainville</option>
+              <option selected="All States" value="">All States</option>
+              <option>Cityville</option>
+              <option>Metropolis</option>
+              <option>Scenicview</option>
+              <option>Corporateville</option>
+              <option>Ruralville</option>
+              <option>Suburbia</option>
+              <option>Highrise City</option>
+              <option>Mountainville</option>
             </select>
-            <select class="form-select" id="type" name="type" [(ngModel)]="type">
-                <option selected="All Types" value="">All Types</option>
-                <option *ngFor="let type of types" [value]="type._id">{{ type.name }}</option>
+            <select class="form-select" id="type" name="type" [(ngModel)]="itemTypes">
+              <option selected="All Types" value="">All Types</option>
+              <option *ngFor="let type of types" [value]="type._id">{{ type.name }}</option>
             </select>
-            <input type="text" id="min-price" name="min-price" placeholder="Min Price (€)" [(ngModel)]="minPrice">
-            <input type="text" id="max-price" name="max-price" placeholder="Max Price (€)" [(ngModel)]="maxPrice">
-        </div>
-        <div class="browse-row" *ngIf="type !== '65afd0827c1611711ff207b5'">
+          </div>
+          <div class="col-md-4">
             <select class="form-select" id="bedrooms" name="bedrooms" [(ngModel)]="bedrooms">
-                <option selected="No. of bedrooms" [ngValue]="null">No. of bedrooms</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
+              <option selected="No. of bedrooms" [ngValue]="null">No. of bedrooms</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
             </select>
             <select class="form-select" id="bathrooms" name="bathrooms" [(ngModel)]="bathrooms">
-                <option selected="No. of bathrooms" [ngValue]="null">No. of bathrooms</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
+              <option selected="No. of bathrooms" [ngValue]="null">No. of bathrooms</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
             </select>
-            <select class="form-select" id="garages" name="garages" [(ngModel)]="garages">
-                <option selected="No. of garages" [ngValue]="null">No. of garages</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-            </select>
-            <input type="text" id="min-size" name="min-size" placeholder="Min Size (m2)" [(ngModel)]="minSize">
-            <input type="text" id="max-size" name="max-size" placeholder="Max Size (m2)" [(ngModel)]="maxSize">
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-6">
+                <input type="text" id="min-price" name="min-price" placeholder="Min Price (€)" [(ngModel)]="minPrice">
+              </div>
+              <div class="col-md-6">
+                <input type="text" id="max-price" name="max-price" placeholder="Max Price (€)" [(ngModel)]="maxPrice">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <input type="text" id="min-size" name="min-size" placeholder="Min Size (m2)" [(ngModel)]="minSize">
+              </div>
+              <div class="col-md-6">
+                <input type="text" id="max-size" name="max-size" placeholder="Max Size (m2)" [(ngModel)]="maxSize">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <input type="text" id="min-area" name="min-area" placeholder="Min Area (ha)" [(ngModel)]="minArea">
+              </div>
+              <div class="col-md-6">
+                <input type="text" id="max-area" name="max-area" placeholder="Max Area (ha)" [(ngModel)]="maxArea">
+              </div>
+            </div>
+          </div>
         </div>
-        <div *ngIf="(type === '6yy5afd0827c1611711ff207b5' || 'All Types')
-            && type !== '65afd0827c1611711ff207b1' 
-            && type !== '65afd0827c1611711ff207b2' 
-            && type !== '65afd0827c1611711ff207b3'
-            && type !== '65afd0827c1611711ff207b4'" class="browse-row-area">
-            <input type="text" id="min-area" name="min-area" placeholder="Min Area (ha)" [(ngModel)]="minArea">
-            <input type="text" id="max-area" name="max-area" placeholder="Max Area (ha)" [(ngModel)]="maxArea">
+        <div class="toggle-switch">
+          <button [ngClass]="{ 'active': !forsale }" name="forsale" id="forsale"
+            (click)="toggleForSale()">For Rent</button>
+          <button [ngClass]="{ 'active': forsale }" name="forsale" id="forsale"
+            (click)="toggleForSale()">For Sale</button>
+        </div>
+        <div class="toggleDiv">
+          <div>
+            <button class="toggle" (click)="toggleVisibility()" *ngIf="showUtilities"><i
+                class="bi bi-chevron-up"></i></button>
+          </div>
+          <div>
+            <button class="toggle" (click)="toggleVisibility()" *ngIf="!showUtilities"><i
+                class="bi bi-chevron-down"></i></button>
+          </div>
+          <div>
+            <p class="toggleText">Additional features</p>
+          </div>
+        </div>
+        <div class="utilities" *ngIf="showUtilities">
+          <div class="form-check">
+            <input type="checkbox" name="garage" id="garage" [(ngModel)]="garage" (change)="changeStatus()">
+            <label for="garage">Garage</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" name="parking" id="parking" [(ngModel)]="parking" (change)="changeStatus()">
+            <label for="parking">Parking</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" name="pool" id="pool" [(ngModel)]="pool" (change)="changeStatus()">
+            <label for="pool">Pool</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" name="gym" id="gym" [(ngModel)]="gym" (change)="changeStatus()">
+            <label for="gym">Gym</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" name="centralHeating" id="centralHeating" [(ngModel)]="centralHeating"
+              (change)="changeStatus()">
+            <label for="centralHeating">Central heating</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" name="internet" id="internet" [(ngModel)]="internet" (change)="changeStatus()">
+            <label for="internet">Internet</label>
+          </div>
         </div>
         <div>
-            <button type="button" (click)="browseItems(title, type, city, bedrooms, bathrooms, garages, minPrice, maxPrice, minSize, maxSize, minArea, maxArea)">Search</button>
+          <button type="button" class="search"
+            (click)="browseItems(title, itemTypes, city, bedrooms, bathrooms, minPrice, maxPrice, minSize, maxSize, minArea, maxArea, forsale, itemUtilities)">Search</button>
         </div>
-    </form>
+      </form>
+    </div>
+  </div>
 </div>
-<div class="row">
-    <div class="card" *ngFor="let item of items">
-        <div class="card-body">
-          <h5 class="card-title">{{ item.title }}</h5>
-          <div class="resizable-container">
-            <img class="resizable-image" [src]="item.images[0]" alt="Property Image">
+<div class="container">
+  <div class="item-container">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let item of items; let i = index">
+        <div class="card">
+          <div class="image-box">
+            <input type="image" (click)="viewDetails(item._id)" class="resizable-image" [src]="item.images[0]"
+              alt="Property Image" />
           </div>
-          <div><i class="bi bi-cursor"></i><p class="card-text">{{ item.address.street }}, {{ item.address.city }}</p></div>
-          <p class="card-text">{{ item.type.name }}</p>
-          <div><p class="card-text">{{ item.price }}</p><i class="bi bi-currency-euro"></i></div>
-          <div class="attributes" [ngSwitch]="item.type.name">
-            <div><i class="bi bi-arrows-move"></i><p *ngSwitchCase="'Plot'" class="card-text">{{ item.area }}</p></div>
-            <div><i class="bi bi-arrows-move"></i><p *ngSwitchDefault class="card-text">{{ item.size }}</p></div>
-            <div><i class="bi bi-door-open"></i><p class="card-text">{{ item.bedrooms }}</p>  </div>
-            <div><i class="bi bi-droplet"></i><p class="card-text">{{ item.bathrooms }}</p></div>
-            <p class="card-text">{{ item.garages }}</p>  
+          <div class="card-body">
+            <div class="card-title">
+              <p class="card-text">{{ item.title }}</p>
+            </div>
+            <div class="attributes">
+              <div *ngIf="item.address.street !== null">
+                <p class="card-text"><i class="bi bi-geo-alt"></i>{{ item.address.street }}, {{ item.address.city}}</p>
+              </div>
+              <div *ngIf="item.address.street === null">
+                <p class="card-text"><i class="bi bi-geo-alt"></i>{{ item.address.city }}</p>
+              </div>
+            </div>
+            <div class="attributes">
+              <div class="types" *ngFor="let type of item.types; let i = index">
+                <div>
+                  <p class="card-text">{{ type.name }}</p>
+                </div>
+                <div *ngIf="item.types.length > 1 && i !== item.types.length-1">
+                  <p class="card-text">, </p>
+                </div>
+              </div>
+            </div>
+            <div class="attributes">
+              <p class="card-text">{{ item.price }} €</p>
+            </div>
+          </div>
+          <div>
+            <div class="attributes-details">
+              <div *ngFor="let type of item.types">
+                <div *ngIf="type.name === 'Plot'" class="attributes">
+                  <p class="card-text"><i class="bi bi-arrows-move"></i>{{ item.area }} m<sup>2</sup></p>
+                </div>
+              </div>
+              <div class="attributes" *ngIf="item.size !== null" class="attributes">
+                <p class="card-text"><i class="bi bi-arrows-angle-expand"></i>{{ item.size }} m<sup>2</sup></p>
+              </div>
+              <div class="attributes" *ngIf="item.bedrooms !== null">
+                <p class="card-text"><i class="bi bi-door-open"></i>{{ item.bedrooms }}</p>
+              </div>
+              <div class="attributes" *ngIf="item.bathrooms !== null">
+                <p class="card-text"><i class="bi bi-droplet"></i>{{ item.bathrooms }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 </div>

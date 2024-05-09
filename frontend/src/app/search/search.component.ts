@@ -7,17 +7,17 @@ import { Router } from '@angular/router'
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
-export class SearchComponent implements OnInit{
+export class SearchComponent implements OnInit {
 
   types: any[] = []
   items: any[] = []
   title: string = ''
-  type: string = ''
+  itemTypes: string = ''
   city: string = ''
   minPrice: number | null = null
   maxPrice: number | null = null
 
-  constructor(private searchService : SearchService, private router : Router) { }
+  constructor(private searchService: SearchService, private router: Router) { }
 
   ngOnInit(): void {
     this.searchService.getTypes().subscribe(
@@ -31,6 +31,6 @@ export class SearchComponent implements OnInit{
   }
 
   search() {
-    this.router.navigate(['/browse'], {queryParams: {title: this.title, type: this.type, city: this.city, minPrice: this.minPrice, maxPrice: this.maxPrice}})
+    this.router.navigate(['/browse'], { queryParams: { title: this.title, types: this.itemTypes, city: this.city, minPrice: this.minPrice, maxPrice: this.maxPrice } })
   }
 }

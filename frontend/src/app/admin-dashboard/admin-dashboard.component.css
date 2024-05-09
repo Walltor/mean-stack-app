@@ -4,41 +4,50 @@ table {
   margin-bottom: 10px;
   width: 100%;
 }
-  
+
 th, td {
   padding: 3px;
   border: 1px solid #ddd;
-  width: 20%;
   text-align: center;
   justify-content: center;
 }
+
+.main-form {
+  padding: 10px;
+  padding-left: 200px;
+  padding-right: 200px;
+}
   
 th {
-  background-color: #f2f2f2;
+  background-color: lightsteelblue;
 }
   
 tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: lightsteelblue;
 }
 
 .addItemBtn {
-  width: 10%;
-  background-color: #007bff;
-  color: #fff;
+  width: 110px;
+  background-color: steelblue;
+  color: white;
   padding: 10px;
   margin: 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.addItemBtn:hover {
+  background: orangered;
 }
 
 .editItemBtn {
-  background-color: #007bff;
+  background-color: steelblue;
   color: #fff;
   border: none;
   margin: 4px;
   border-radius: 4px;
-  cursor: pointer;
 }
 
 .deleteItemBtn {
@@ -50,8 +59,36 @@ tbody tr:nth-child(even) {
   cursor: pointer;
 }
 
+select {
+  width: 100%;
+  margin-right: 1%;
+  float: left;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+}
+
 input {
   width: 100%;
+  margin-right: 1%;
+  float: left;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+}
+
+textarea {
+  width: 100%;
+  margin-right: 1%;
+  float: left;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
 }
 
 .title-row {
@@ -64,4 +101,25 @@ input {
 
 .error {
   color: crimson;
+}
+
+.addItemBtn {
+  float: left;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.toggle {
+  background-color: steelblue;
+  color: white;
+  padding-left: 13px;
+  padding-right: 13px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 15px;
 }
