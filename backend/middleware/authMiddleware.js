@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken')
 const config = require('../config/jwtSecret')
+const express = require('express')
+const path = require('path')
+const app = express()
 
 function authenticateToken(req, res, next) {
     const authHeader  = req.headers['authorization']
@@ -24,5 +27,7 @@ function requireAdmin(req, res, next) {
     }
     next()
 }
+
+//app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 module.exports = { authenticateToken, requireAdmin }

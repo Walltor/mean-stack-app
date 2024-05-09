@@ -6,7 +6,7 @@ mongoose.connect('mongodb://localhost:27017/meanstackapp', { useNewUrlParser: tr
 
 // User seed data
 const users = [
-  { username: 'admin', email: 'admin@example.com', password: 'admin123' },
+  { username: 'admin', email: 'admin@example.com', password: 'admin' },
   { username: 'user1', email: 'user1@example.com', password: 'user1' },
   { username: 'user2', email: 'user2@example.com', password: 'user2' },
   { username: 'user3', email: 'user3@example.com', password: 'user3' },
