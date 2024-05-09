@@ -8,7 +8,7 @@ import { AuthService } from '../auth/auth.service'
   styleUrl: './header.component.css'
 })
 
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) { }
 
   token = localStorage.getItem('token')

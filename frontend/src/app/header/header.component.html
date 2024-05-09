@@ -1,20 +1,21 @@
 <header>
-    <nav class="navbar">
-      <div class="navbar-brand">
-        <a routerLink="/">Your Logo</a>
-      </div>
-      <div class="navbar-links">
-        <ul>
-          <li><a routerLink="/">Home</a></li>
-          <li><a routerLink="/about">About</a></li>
-          <li><a routerLink="/contact">Contact</a></li>
-          <li><a routerLink="/browse">Browse</a></li>
-          <li *ngIf="isLoggedIn"><a routerLink="/admin">Admin</a></li>
-        </ul>
-      </div>
-      <div class="logout">
-        <button *ngIf="isLoggedIn" (click)="logout()">Logout</button>
-      </div>
-    </nav>
-  </header>
-  
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a routerLink="/"><img class="navbar-logo" src="favicon.ico"></a>
+    </div>
+    <div class="navbar-links">
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/about">About</a></li>
+        <li><a routerLink="/contact">Contact</a></li>
+        <li><a routerLink="/browse">Browse</a></li>
+      </ul>
+    </div>
+    <div class="admin-link" *ngIf="isLoggedIn">
+      <a routerLink="/admin">Admin<i class="bi bi-person-gear"></i></a>
+    </div>
+    <div class="logout">
+      <button *ngIf="isLoggedIn" (click)="logout()">Logout<i class="bi bi-arrow-bar-right"></i></button>
+    </div>
+  </nav>
+</header>

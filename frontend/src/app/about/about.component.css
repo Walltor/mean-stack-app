@@ -1,0 +1,18 @@
+h1,
+hr {
+    text-align: center;
+}
+
+h1 {
+    margin-top: 35px;
+}
+
+hr {
+    width: 120px;
+    margin: auto;
+}
+
+.text {
+    padding: 100px;
+    padding-top: 25px;
+}

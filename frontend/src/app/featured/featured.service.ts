@@ -1,21 +1,21 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { Observable } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeaturedService {
-  private apiItemUrl = 'http://localhost:3000/items/search';
-  private apiTypeUrl = 'http://localhost:3000/types';
+  private apiTypeUrl = 'http://localhost:3000/types'
+  private apiFeaturedUrl = 'http://localhost:3000/featured'
 
   constructor(private http: HttpClient) { }
 
-  getItems(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiItemUrl);
+  getTypes(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiTypeUrl)
   }
 
-  getTypes(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiTypeUrl);
+  getFeatured(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiFeaturedUrl)
   }
 }

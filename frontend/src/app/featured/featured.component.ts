@@ -1,34 +1,57 @@
-import { Component } from '@angular/core';
-import { FeaturedService } from './featured.service';
-import { CarouselConfig } from 'ngx-bootstrap/carousel';
+import { Component } from '@angular/core'
+import { FeaturedService } from './featured.service'
+import { ActivatedRoute, Router } from '@angular/router'
+import { formatNumber } from '@angular/common'
 
 @Component({
   selector: 'app-featured',
   templateUrl: './featured.component.html',
-  providers: [
-    { provide: CarouselConfig, useValue: { interval: 1500, noPause: false, showIndicators: true } }
-  ],
   styleUrl: './featured.component.css',
 })
 
 export class FeaturedComponent {
-  items : any[] = [];
+  types: any[] = []
+  items: any[] = []
+  slideConfig = {
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    dots: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: true,
+    infinite: false,
+    prevArrow: '.prev',
+    nextArrow: '.next'
+  }
 
-  noWrapSlides = false;
-  showIndicator = true;
-  isAnimated = true;
-  itemsPerSlide = 3;
-
-  constructor(private FeaturedService : FeaturedService) { }
+  constructor(private FeaturedService: FeaturedService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.FeaturedService.getItems().subscribe(
+    this.FeaturedService.getTypes().subscribe(
       data => {
-        this.items = data
+        this.types = data
       },
       error => {
-        console.error('Error fetching types', error);
+        console.error('Error fetching types', error)
+      }
+    )
+    this.FeaturedService.getFeatured().subscribe(
+      data => {
+        this.items = data
+        for (let index = 0; index < this.items.length; index++) {
+          this.items[index].price = formatNumber(Number(this.items[index].price), 'en-US', '1.0-0')
+          this.items[index].size = formatNumber(Number(this.items[index].size), 'en-US', '1.0-0')
+          this.items[index].area = formatNumber(Number(this.items[index].area), 'en-US', '1.0-0')
+        }
+      },
+      error => {
+        console.error('Error fetching types', error)
       }
     )
   }
+
+  viewDetails(id: number) {
+    this.router.navigate(['item-details/', id])
+  }
+
 }
