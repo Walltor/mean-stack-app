@@ -29,7 +29,10 @@ export class ItemDetailsComponent {
     nextArrow: '.next'
   }
 
-  constructor(private ItemDetailsService: ItemDetailsService, private route: ActivatedRoute) { }
+  constructor(
+    private ItemDetailsService: ItemDetailsService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.ItemDetailsService.getTypes().subscribe(
@@ -50,7 +53,7 @@ export class ItemDetailsComponent {
     )
   }
 
-  getItemDetails(itemId: ObjectId): any {
+  getItemDetails(itemId: ObjectId) {
     this.ItemDetailsService.getItem(itemId).subscribe(
       (item) => {
         this.item = item
@@ -59,12 +62,16 @@ export class ItemDetailsComponent {
         item.area = formatNumber(Number(item.area), 'en-US', '1.0-0')
       },
       (error) => {
-        console.error('Error fethcing item.', error)
+        console.error('Error fetching item.', error)
       }
     )
   }
 
   toggleView() {
     this.overview = !this.overview
+  }
+
+  handleImageError(event: any) {
+    event.target.src = "../../assets/image.svg"
   }
 }

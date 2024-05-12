@@ -23,7 +23,7 @@ export class BrowseComponent implements OnInit {
   minSize: number | null = null
   maxSize: number | null = null
   minArea: number | null = null
-  maxArea: number | null = null    
+  maxArea: number | null = null
   forsale: boolean | null = null
   garage: boolean | null = false
   parking: boolean | null = false
@@ -34,10 +34,10 @@ export class BrowseComponent implements OnInit {
   itemUtilities: string[] = []
   showUtilities: boolean | null = false
 
-  constructor(private BrowseService : BrowseService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private BrowseService: BrowseService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    
+
     this.BrowseService.getTypes().subscribe(
       data => {
         this.types = data
@@ -45,7 +45,7 @@ export class BrowseComponent implements OnInit {
       error => {
         console.error('Error fetching types', error)
       }
-    ) 
+    )
     this.BrowseService.getUtilites().subscribe(
       data => {
         this.utilities = data
@@ -53,7 +53,7 @@ export class BrowseComponent implements OnInit {
       error => {
         console.error('Error fetching utilities', error)
       }
-    ) 
+    )
     this.route.queryParams.subscribe(params => {
       this.browseItems(
         params['title'],
@@ -74,16 +74,16 @@ export class BrowseComponent implements OnInit {
   }
 
   browseItems(
-    title: string, 
-    itemTypes: string, 
-    city: string, 
-    bedrooms: number | null, 
-    bathrooms: number | null, 
-    minPrice: number | null, 
-    maxPrice: number | null, 
-    minSize: number | null, 
-    maxSize: number | null, 
-    minArea: number | null, 
+    title: string,
+    itemTypes: string,
+    city: string,
+    bedrooms: number | null,
+    bathrooms: number | null,
+    minPrice: number | null,
+    maxPrice: number | null,
+    minSize: number | null,
+    maxSize: number | null,
+    minArea: number | null,
     maxArea: number | null,
     forsale: boolean | null,
     itemUtilities: string[] | null) {
@@ -107,60 +107,60 @@ export class BrowseComponent implements OnInit {
   }
 
   changeStatus() {
-    if(this.garage === true && this.itemUtilities.indexOf("000000000000000000000001") === -1) {
+    if (this.garage === true && this.itemUtilities.indexOf("000000000000000000000001") === -1) {
       this.itemUtilities.push("000000000000000000000001")
-    } 
-    if(this.garage === false) {
+    }
+    if (this.garage === false) {
       const index = this.itemUtilities.indexOf("000000000000000000000001")
       if (index > -1) {
         this.itemUtilities.splice(index, 1)
-      }    
+      }
     }
-    
-    if(this.parking === true && this.itemUtilities.indexOf("000000000000000000000002") === -1) {
+
+    if (this.parking === true && this.itemUtilities.indexOf("000000000000000000000002") === -1) {
       this.itemUtilities.push("000000000000000000000002")
-    } 
-    if(this.parking === false) {
+    }
+    if (this.parking === false) {
       const index = this.itemUtilities.indexOf("000000000000000000000002")
       if (index > -1) {
         this.itemUtilities.splice(index, 1)
-      }    
+      }
     }
-    if(this.pool === true && this.itemUtilities.indexOf("000000000000000000000003") === -1) {
+    if (this.pool === true && this.itemUtilities.indexOf("000000000000000000000003") === -1) {
       this.itemUtilities.push("000000000000000000000003")
-    } 
-    if(this.pool === false) {
+    }
+    if (this.pool === false) {
       const index = this.itemUtilities.indexOf("000000000000000000000003")
       if (index > -1) {
         this.itemUtilities.splice(index, 1)
-      }    
+      }
     }
-    if(this.gym === true && this.itemUtilities.indexOf("000000000000000000000004") === -1) {
+    if (this.gym === true && this.itemUtilities.indexOf("000000000000000000000004") === -1) {
       this.itemUtilities.push("000000000000000000000004")
-    } 
-    if(this.gym === false) {
+    }
+    if (this.gym === false) {
       const index = this.itemUtilities.indexOf("000000000000000000000004")
       if (index > -1) {
         this.itemUtilities.splice(index, 1)
-      }    
+      }
     }
-    if(this.centralHeating === true && this.itemUtilities.indexOf("000000000000000000000005") === -1) {
+    if (this.centralHeating === true && this.itemUtilities.indexOf("000000000000000000000005") === -1) {
       this.itemUtilities.push("000000000000000000000005")
     }
-    if(this.centralHeating === false) {
+    if (this.centralHeating === false) {
       const index = this.itemUtilities.indexOf("000000000000000000000005")
       if (index > -1) {
         this.itemUtilities.splice(index, 1)
-      }    
+      }
     }
-    if(this.internet === true && this.itemUtilities.indexOf("000000000000000000000006") === -1) {
+    if (this.internet === true && this.itemUtilities.indexOf("000000000000000000000006") === -1) {
       this.itemUtilities.push("000000000000000000000006")
-    } 
-    if(this.internet === false) {
+    }
+    if (this.internet === false) {
       const index = this.itemUtilities.indexOf("000000000000000000000006")
       if (index > -1) {
         this.itemUtilities.splice(index, 1)
-      }    
+      }
     }
   }
 
@@ -170,5 +170,9 @@ export class BrowseComponent implements OnInit {
 
   toggleForSale() {
     this.forsale = !this.forsale
+  }
+
+  handleImageError(event: any) {
+    event.target.src = "../../assets/image.svg"
   }
 }

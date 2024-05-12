@@ -24,7 +24,10 @@ export class FeaturedComponent {
     nextArrow: '.next'
   }
 
-  constructor(private FeaturedService: FeaturedService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private FeaturedService: FeaturedService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.FeaturedService.getTypes().subscribe(
@@ -54,4 +57,7 @@ export class FeaturedComponent {
     this.router.navigate(['item-details/', id])
   }
 
+  handleImageError(event: any) {
+    event.target.src = "../../assets/image.svg"
+  }
 }

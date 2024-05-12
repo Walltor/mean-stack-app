@@ -77,10 +77,10 @@
           </div>
         </div>
         <div class="toggle-switch">
-          <button [ngClass]="{ 'active': !forsale }" name="forsale" id="forsale"
-            (click)="toggleForSale()">For Rent</button>
-          <button [ngClass]="{ 'active': forsale }" name="forsale" id="forsale"
-            (click)="toggleForSale()">For Sale</button>
+          <button [ngClass]="{ 'active': !forsale }" name="forsale" id="forsale" (click)="toggleForSale()">For
+            Rent</button>
+          <button [ngClass]="{ 'active': forsale }" name="forsale" id="forsale" (click)="toggleForSale()">For
+            Sale</button>
         </div>
         <div class="toggleDiv">
           <div>
@@ -137,7 +137,7 @@
         <div class="card">
           <div class="image-box">
             <input type="image" (click)="viewDetails(item._id)" class="resizable-image" [src]="item.images[0]"
-              alt="Property Image" />
+              (error)="handleImageError($event)" alt="Property Image" />
           </div>
           <div class="card-body">
             <div class="card-title">

@@ -22,13 +22,11 @@ hr {
 
 .card-title {
   display: flex;
-  font-size-adjust: 0.5;
 }
 
 .attributes {
   display: flex;
   flex-direction: row;
-  font-size-adjust: 0.4;
   margin-right: 14px;
   margin-left: 4px;
 }
@@ -38,7 +36,6 @@ hr {
   padding: 5px;
   background-color: steelblue;
   color: white;
-  font-size-adjust: 0.4;
 }
 
 .attributes-details-other {
@@ -46,7 +43,6 @@ hr {
   padding: 5px;
   background-color: darkblue;
   color: white;
-  font-size-adjust: 0.4;
 }
 
 .resizable-image {
@@ -82,7 +78,6 @@ hr {
 .types {
   display: flex;
   flex-direction: row;
-  font-size-adjust: 0.4;
 }
 
 .prev {
