@@ -29,7 +29,9 @@ const itemSchema = new mongoose.Schema({
         { 
             type: String 
         }
-    ]
+    ],
+    created_at: {type: Date},
+    updated_at: {type: Date}
 })
 
 const Item = mongoose.model('Item', itemSchema)

@@ -1,16 +1,47 @@
+const connectToDatabase = require('../config/database')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const User = require('../models/user.js')
 
-mongoose.connect('mongodb://localhost:27017/meanstackapp', { useNewUrlParser: true, useUnifiedTopology: true, })
+connectToDatabase()
 
 // User seed data
 const users = [
-  { username: 'admin', email: 'admin@example.com', password: 'admin' },
-  { username: 'user1', email: 'user1@example.com', password: 'user1' },
-  { username: 'user2', email: 'user2@example.com', password: 'user2' },
-  { username: 'user3', email: 'user3@example.com', password: 'user3' },
-  { username: 'user4', email: 'user4@example.com', password: 'user4' },
+  {
+    username: 'admin',
+    email: 'admin@example.com',
+    password: 'admin',
+    created_at: Date.now(),
+    updated_at: Date.now()
+  },
+  {
+    username: 'user1',
+    email: 'user1@example.com',
+    password: 'user1',
+    created_at: Date.now(),
+    updated_at: Date.now()
+  },
+  {
+    username: 'user2',
+    email: 'user2@example.com',
+    password: 'user2',
+    created_at: Date.now(),
+    updated_at: Date.now()
+  },
+  {
+    username: 'user3',
+    email: 'user3@example.com',
+    password: 'user3',
+    created_at: Date.now(),
+    updated_at: Date.now()
+  },
+  {
+    username: 'user4',
+    email: 'user4@example.com',
+    password: 'user4',
+    created_at: Date.now(),
+    updated_at: Date.now()
+  },
 ]
 
 // Function to seed users
