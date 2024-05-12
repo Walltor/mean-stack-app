@@ -1,15 +1,46 @@
+const connectToDatabase = require('../config/database')
 const mongoose = require('mongoose')
 const Utility = require('../models/utility.js')
 
-mongoose.connect('mongodb://localhost:27017/meanstackapp', { useNewUrlParser: true, useUnifiedTopology: true, })
+connectToDatabase()
 
 const utilities = [
-    { _id: '000000000000000000000001', name: 'Garage' },
-    { _id: '000000000000000000000002', name: 'Parking' },
-    { _id: '000000000000000000000003', name: 'Pool' },
-    { _id: '000000000000000000000004', name: 'Gym' },
-    { _id: '000000000000000000000005', name: 'Central heating' },
-    { _id: '000000000000000000000006', name: 'Internet' }
+    {
+        _id: '000000000000000000000001',
+        name: 'Garage',
+        created_at: Date.now(),
+        updated_at: Date.now()
+    },
+    {
+        _id: '000000000000000000000002',
+        name: 'Parking',
+        created_at: Date.now(),
+        updated_at: Date.now()
+    },
+    {
+        _id: '000000000000000000000003',
+        name: 'Pool',
+        created_at: Date.now(),
+        updated_at: Date.now()
+    },
+    {
+        _id: '000000000000000000000004',
+        name: 'Gym',
+        created_at: Date.now(),
+        updated_at: Date.now()
+    },
+    {
+        _id: '000000000000000000000005',
+        name: 'Central heating',
+        created_at: Date.now(),
+        updated_at: Date.now()
+    },
+    {
+        _id: '000000000000000000000006',
+        name: 'Internet',
+        created_at: Date.now(),
+        updated_at: Date.now()
+    }
 ]
 
 async function seedUtilities() {

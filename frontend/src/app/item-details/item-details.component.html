@@ -19,18 +19,21 @@
       </div>
       <div class="attribute" *ngFor="let type of item.types">
         <h4 class="icon-row"
-          *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)"><i
-            class="bi bi-arrows-angle-expand"></i>{{ item.size }}</h4>
+          *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)">
+          <i class="bi bi-arrows-angle-expand"></i>{{ item.size }}
+        </h4>
       </div>
       <div class="attribute" *ngFor="let type of item.types">
         <h4 class="icon-row"
-          *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)"><i
-            class="bi bi-door-open"></i>{{ item.bedrooms }}</h4>
+          *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)">
+          <i class="bi bi-door-open"></i>{{ item.bedrooms }}
+        </h4>
       </div>
       <div class="attribute" *ngFor="let type of item.types">
         <h4 class="icon-row"
-          *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)"><i
-            class="bi bi-droplet"></i>{{ item.bathrooms }}</h4>
+          *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)">
+          <i class="bi bi-droplet"></i>{{ item.bathrooms }}
+        </h4>
       </div>
     </div>
     <div class="row">
@@ -42,7 +45,8 @@
           <div ngxSlickItem *ngFor="let image of item.images; let i = index" class="slide">
             <div class="container">
               <div class="card">
-                <img class="resizable-image" [src]="item.images[i]" alt="Property Image">
+                <img class="resizable-image" [src]="item.images[i]" alt="Property Image"
+                  (error)="handleImageError($event)">
               </div>
             </div>
           </div>
@@ -82,10 +86,12 @@
     <div class="title" style="padding: 0;">
       <div class="title-row">
         <div class="toggle-switch">
-          <button [ngClass]="{ 'active': overview }" name="overview" id="overview"
-            (click)="toggleView()"><h4>Overview</h4></button>
-          <button [ngClass]="{ 'active': !overview }" name="overview" id="overview"
-            (click)="toggleView()"><h4>Features</h4></button>
+          <button [ngClass]="{ 'active': overview }" name="overview" id="overview" (click)="toggleView()">
+            <h4>Overview</h4>
+          </button>
+          <button [ngClass]="{ 'active': !overview }" name="overview" id="overview" (click)="toggleView()">
+            <h4>Features</h4>
+          </button>
         </div>
       </div>
     </div>
@@ -135,7 +141,8 @@
         </div>
       </div>
       <div class="attributes-row-bottom" *ngFor="let type of item.types">
-        <div class="attributes-row" *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)">
+        <div class="attributes-row"
+          *ngIf="(type.name === 'Plot' && item.types.length > 1) || (type.name !== 'Plot' && item.types.length === 1)">
           <div class="attribute-bottom">
             <h5 style="font-weight: bold">Property size:</h5>
           </div>

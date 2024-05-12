@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module'
-import { ButtonsModule } from 'ngx-bootstrap/buttons'
-import { CarouselModule } from 'ngx-bootstrap/carousel'
 import { ReactiveFormsModule } from '@angular/forms'
 import { SlickCarouselModule } from 'ngx-slick-carousel'
 
@@ -19,11 +17,12 @@ import { SearchComponent } from './search/search.component'
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component'
 import { AddItemComponent } from './admin-dashboard/add-item/add-item.component'
 import { AuthService } from './auth/auth.service'
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { InfoComponent } from './info/info.component';
-import { ContactComponent } from './contact/contact.component';
-import { AboutComponent } from './about/about.component';
-import { ItemDetailsComponent } from './item-details/item-details.component'
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
+import { InfoComponent } from './info/info.component'
+import { ContactComponent } from './contact/contact.component'
+import { AboutComponent } from './about/about.component'
+import { ItemDetailsComponent } from './item-details/item-details.component';
+import { EditItemComponent } from './admin-dashboard/edit-item/edit-item.component'
 
 @NgModule({
   declarations: [
@@ -42,14 +41,13 @@ import { ItemDetailsComponent } from './item-details/item-details.component'
     ContactComponent,
     AboutComponent,
     ItemDetailsComponent,
+    EditItemComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    ButtonsModule,
-    CarouselModule,
     AppRoutingModule,
     ReactiveFormsModule,
     SlickCarouselModule

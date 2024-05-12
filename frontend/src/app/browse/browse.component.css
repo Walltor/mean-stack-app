@@ -117,13 +117,11 @@ label {
 
 .card-title {
   display: flex;
-  font-size-adjust: 0.5;
 }
 
 .attributes {
   display: flex;
   flex-direction: row;
-  font-size-adjust: 0.4;
   margin-right: 15px;
   margin-left: 5px;
 }
@@ -133,7 +131,6 @@ label {
   padding: 5px;
   background-color: steelblue;
   color: white;
-  font-size-adjust: 0.4;
 }
 
 .resizable-image {

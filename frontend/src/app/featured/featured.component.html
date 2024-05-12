@@ -13,7 +13,7 @@
           <div class="container">
             <div class="card">
               <div class="image-box">
-                <input type="image" (click)="viewDetails(item._id)" class="resizable-image" [src]="item.images[0]"
+                <input type="image" (click)="viewDetails(item._id)" class="resizable-image" [src]="item.images[0]" (error)="handleImageError($event)"
                   alt="Property Image" />
               </div>
               <div class="card-body">

@@ -11,7 +11,7 @@ const utilRoutes = require('./routes/utilityRoutes')
 
 const app = express()
 
-connectToDatabase();
+connectToDatabase()
 
 app.use(bodyParser.json())
 app.use(cors())

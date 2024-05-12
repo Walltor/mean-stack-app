@@ -1,99 +1,42 @@
 <body>
   <div class="title-row">
     <h1>Admin Dashboard</h1>
-    <button class="addItemBtn" (click)="redirect()">Add item <i class="bi bi-plus-circle"></i></button>
+    <button class="addItemBtn" (click)="navAdd()">Add item <i class="bi bi-plus-circle"></i></button>
   </div>
   <div class="container">
     <table *ngFor="let item of items; let i = index">
       <thead>
         <tr>
-          <th>Item ID: {{ item._id}}</th>
-          <th>Title: {{ item.title }}</th>
-          <th><i class="bi bi-pencil-square" (click)="itemDetails(i)"></i></th>
-          <th><i class="bi bi-trash3" (click)="delete(item)"></i></th>
+          <th>Image</th>
+          <th>Item ID</th>
+          <th>Title</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Price</th>
+          <th>Date</th>
         </tr>
       </thead>
-      <tbody *ngIf="showDiv[i]">
+      <tbody>
         <tr>
-          <td colspan="5">
-            <div class="container">
-              <form class="main-form" [formGroup]="itemForms[i]">
-                <input formControlName="title">
-                <div class="title-row">
-                  <div *ngFor="let type of types" class="row">
-                    <input type="checkbox" [checked]="checkType(item.types, type._id)" (change)="pushType(item, type, $event)">
-                    <label>{{ type.name }}</label>
-                  </div>
-                </div>
-                <select class="form-select" id="city" name="city" formControlName="city">
-                  <option selected="All States" value="">All States</option>
-                  <option>Cityville</option>
-                  <option>Metropolis</option>
-                  <option>Scenicview</option>
-                  <option>Corporateville</option>
-                  <option>Suburbia</option>
-                  <option>Highrise City</option>
-                  <option>Mountainville</option>
-                </select>
-                <input type="text" id="street" name="street" placeholder="Street" formControlName="street">
-                <div>
-                  <select class="form-select" id="bedrooms" name="bedrooms" formControlName="bedrooms">
-                    <option selected="No. of bedrooms" value="">No. of bedrooms</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                  </select>
-                  <select class="form-select" id="bathrooms" name="bathrooms" formControlName="bathrooms">
-                    <option selected="No. of bathrooms" value="">No. of bathrooms</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                  </select>
-                  <input type="text" id="size" name="size" placeholder="Size (m2)" formControlName="size">
-                </div>
-                <div>
-                  <input type="text" id="area" name="area" placeholder="Area (ha)" formControlName="area">
-                </div>
-                <div>
-                  <input type="text" id="price" name="price" placeholder="Price (€)" formControlName="price">
-                </div>
-                <textarea type="text" id="description" name="description" placeholder="Price (€)" formControlName="description"></textarea>
-                <div>
-                  <div class="title-row">
-                    <div class="row">
-                      <input type="checkbox" name="forsale" id="forsale" formControlName="forsale">
-                      <label for="forsale">For Sale</label>
-                    </div>
-                    <div class="row">
-                      <input type="checkbox" name="featured" id="featured" formControlName="featured">
-                      <label for="featured">Featured</label>
-                    </div>
-                  </div>
-                  <div class="title-row">
-                    <div *ngFor="let utility of utilities" class="row">
-                      <input type="checkbox" [checked]="checkType(item.utilities, utility._id)" (change)="pushUtility(item, utility, $event)">
-                    <label>{{ utility.name }}</label>
-                    </div>
-                  </div>
-                </div>
-                <button (click)="saveChanges(item, i)">Save</button>
-              </form>
-            </div>
+          <td>
+            <img [src]="item.images[0]" (error)="handleImageError($event)">
           </td>
+          <td>{{ item._id }}
+        <tr>
+          <ul>
+            <li><a (click)="navShow(item._id)">View</a></li>
+            <li><a (click)="navEdit(item._id)">Edit</a></li>
+            <li><a (click)="delete(item)">Delete</a></li>
+          </ul>
+        </tr>
+        </td>
+        <td>{{ item.title }}</td>
+        <td>
+          <p *ngFor="let type of item.types; let j = index">{{ item.types[j].name }}</p>
+        </td>
+        <td>{{ item.forsale ? 'For sale' : 'For rent'}}</td>
+        <td>{{ item.price }} €</td>
+        <td>{{ item.created_at }}</td>
         </tr>
       </tbody>
     </table>

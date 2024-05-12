@@ -31,7 +31,7 @@ export class AddItemComponent implements OnInit {
   previewImages: string[] = []
   storage = 'http://localhost:3000/uploads/'
 
-  constructor(private addItemService : AddItemService, private router : Router, private fb: FormBuilder) {}
+  constructor(private addItemService : AddItemService, private router : Router, private formBuilder: FormBuilder) {}
 
   onFileChange(event: any) {
     const files: FileList = event.target.files
@@ -70,7 +70,7 @@ export class AddItemComponent implements OnInit {
       error => {
         console.error('Error fetching types', error)
       }) 
-    this.myForm = this.fb.group({ 
+    this.myForm = this.formBuilder.group({ 
       title: [{ value: '', disabled: false }, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
       city: [{ value: '', disabled: false }, Validators.required], 
       type: [{ value: '', disabled: false }, Validators.required],

@@ -1,0 +1,88 @@
+<div class="container">
+    <form class="main-form" [formGroup]="itemForm">
+        <div class="title-row">
+            <input type="text" formControlName="title">
+        </div>
+        <div class="title-row">
+            <div *ngFor="let type of types">
+                <input type="checkbox" [checked]="checkType(item.types, type._id)"
+                    (click)="pushType(item, type, $event)">
+                <label>{{ type.name }}</label>
+            </div>
+        </div>
+        <div class="title-row">
+            <select class="form-select" id="city" name="city" formControlName="city">
+                <option selected="All States" value="">All States</option>
+                <option>Cityville</option>
+                <option>Metropolis</option>
+                <option>Scenicview</option>
+                <option>Corporateville</option>
+                <option>Suburbia</option>
+                <option>Highrise City</option>
+                <option>Mountainville</option>
+            </select>
+        </div>
+        <div class="title-row">
+            <input type="text" id="street" name="street" placeholder="Street" formControlName="street">
+        </div>
+        <div class="title-row">
+            <select class="form-select" id="bedrooms" name="bedrooms" formControlName="bedrooms">
+                <option selected="No. of bedrooms" value="">No. of bedrooms</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+        </div>
+        <div class="title-row">
+            <select class="form-select" id="bathrooms" name="bathrooms" formControlName="bathrooms">
+                <option selected="No. of bathrooms" value="">No. of bathrooms</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+        </div>
+        <div class="title-row">
+            <input type="text" id="size" name="size" placeholder="Size (m2)" formControlName="size">
+        </div>
+        <div class="title-row">
+            <input type="text" id="area" name="area" placeholder="Area (ha)" formControlName="area">
+        </div>
+        <div class="title-row">
+            <input type="text" id="price" name="price" placeholder="Price (€)" formControlName="price">
+        </div>
+        <div class="title-row">
+            <textarea type="text" type="text" id="description" name="description" placeholder="Price (€)"
+                formControlName="description"></textarea>
+        </div>
+        <div class="title-row">
+            <input type="checkbox" name="forsale" id="forsale" formControlName="forsale">
+            <label for="forsale">For Sale</label>
+            <input type="checkbox" name="featured" id="featured" formControlName="featured">
+            <label for="featured">Featured</label>
+        </div>
+        <div class="title-row">
+            <div *ngFor="let utility of utilities">
+                <input type="checkbox" [checked]="checkType(item.utilities, utility._id)" (click)="pushUtility(item,
+                        utility, $event)">
+                <label>{{ utility.name }}</label>
+            </div>
+        </div>
+        <div class="row">
+            <button (click)="save(item)">Save</button>
+        </div>
+    </form>
+</div>
