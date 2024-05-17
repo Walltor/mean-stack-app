@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable, catchError, throwError } from 'rxjs'
-import { Router } from '@angular/router'
 import { ObjectId } from 'mongodb'
 
 @Injectable({
@@ -13,7 +12,7 @@ export class AdminDashboardService {
   private apiTypeUrl = 'http://localhost:3000/types'
   private apiUtilityUrl = 'http://localhost:3000/utilities'
 
-  constructor(private http: HttpClient, private Router: Router) { }
+  constructor(private http: HttpClient) { }
 
   getItems(): Observable<any[]> {
     return this.http.get<any[]>(this.apiItemUrl)

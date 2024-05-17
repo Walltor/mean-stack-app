@@ -8,10 +8,6 @@
   padding-right: 150px;
 }
 
-.carousel-container {
-  justify-content: center;
-}
-
 .card {
   margin: 0 auto;
   display: flex;
@@ -20,7 +16,7 @@
 }
 
 .resizable-image {
-  height: 480px;
+  height: 450px;
   object-fit: cover;
   display: block;
 }
@@ -33,47 +29,41 @@
 
 .title-row {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 8px;
 }
 
 .attributes-row {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .attribute {
-  margin-top: 5px;
-  margin-right: 10px;
-}
-
-.attribute-bottom {
-  margin-top: 5px;
   margin-left: 10px;
 }
 
-.attribute-bottom-name {
-  margin-top: 5px;
-  margin-left: 10px;
-}
-
-.attributes-row-bottom {
+.info-row {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  margin-bottom: 5px;
+}
+
+.info {
+  margin-right: 5px;
 }
 
 .forsale {
   margin-left: 25px;
   background: orangered;
-  padding-top: 8px;
-  padding-left: 6px;
+  padding-top: 5px;
+  padding-left: 5px;
   padding-right: 6px;
   border-radius: 3px;
+}
+
+.price {
+  padding-top: 5px;
 }
 
 .bi {
@@ -93,20 +83,16 @@
 }
 
 #arrows {
-  margin-top: 250px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .bi:not(.bi-check2-square) {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .bi-check2-square {
   margin-left: 10px;
-}
-
-.types {
-  display: flex;
-  flex-direction: row;
 }
 
 .toggle-switch {
@@ -115,7 +101,6 @@
 
 .toggle-switch button {
   padding: 10px 20px;
-  padding-top: 15px;
   border: none;
   cursor: pointer;
   outline: none;
@@ -134,7 +119,6 @@
   background-color: steelblue;
 }
 
-.overview-container,
-.features-container {
-  min-height: 240px;
+h5 {
+  font-size: large;
 }

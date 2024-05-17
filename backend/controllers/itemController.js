@@ -155,7 +155,7 @@ class ItemController {
     const { title, types, address, bedrooms, bathrooms, price, size, area, forsale, featured, description, utilities, images } = req.body
 
     try {
-      const newItem = new ItemModel({ title, types, address, bedrooms, bathrooms, price, size, area, forsale, featured, description, utilities, images })
+      const newItem = new ItemModel({ title, types, address, bedrooms, bathrooms, price, size, area, forsale, featured, description, utilities, images, created_at: Date.now(), updated_at: Date.now() })
       const savedItem = await newItem.save()
 
       res.status(201).json(savedItem)
@@ -188,7 +188,7 @@ class ItemController {
     try {
       const updatedItem = await ItemModel.findByIdAndUpdate(
         itemId,
-        { title, types, address, bedrooms, bathrooms, price, size, area, forsale, featured, description, utilities }
+        { title, types, address, bedrooms, bathrooms, price, size, area, forsale, featured, description, utilities, updated_at: Date.now() }
       )
 
       if (!updatedItem) {

@@ -13,12 +13,12 @@ import { AboutComponent } from './about/about.component'
 import { ItemDetailsComponent } from './item-details/item-details.component'
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'admin', component: LoginComponent },
   { path: '', component: HomeComponent },
   { path: 'contact', component: ContactComponent},
   { path: 'about', component: AboutComponent},
   { path: 'browse', component: BrowseComponent },
-  { path: 'admin', component: AdminDashboardComponent, canActivate: [authGuard] },
+  { path: 'admin/admin-dashboard', component: AdminDashboardComponent, canActivate: [authGuard] },
   { path: 'admin/add-item', component: AddItemComponent, canActivate: [authGuard] },
   { path: 'admin/edit-item/:id', component: EditItemComponent, canActivate: [authGuard] },
   { path: 'item-details/:id', component: ItemDetailsComponent },

@@ -13,6 +13,7 @@ export class AdminDashboardComponent implements OnInit {
   types: any[] = []
   items: any[] = []
   utilities: any[] = []
+  isVisible: boolean = false
 
   constructor(
     private AdminDashboardService: AdminDashboardService,
@@ -48,11 +49,11 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   navEdit(id: string) {
-    this.router.navigate(['/admin/edit-item/', id])
+    this.router.navigate(['/admin/edit-item', id])
   }
 
   navShow(id: string) {
-    this.router.navigate(['/item-details/', id])
+    this.router.navigate(['/item-details', id])
   }
 
   delete(item: any) {
@@ -63,5 +64,9 @@ export class AdminDashboardComponent implements OnInit {
 
   handleImageError(event: any) {
     event.target.src = "../../assets/image.svg"
+  }
+
+  onMouseEnter(item: any) {
+    this.isVisible = true;
   }
 }

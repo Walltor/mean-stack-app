@@ -1,165 +1,175 @@
-<form [formGroup]="myForm" class="main-form">
-    <div class="row">
-        <div class="col-md-7">
-            <div class="container">
-                <div>
-                    <div
-                        *ngIf="myForm.get('title')?.invalid && (myForm.get('title')?.dirty || myForm.get('title')?.touched)">
-                        <span class="error" *ngIf="myForm.get('title')?.errors?.['required']">Title is required.</span>
-                        <span class="error" *ngIf="myForm.get('title')?.errors?.['minlength']">Minimum of 5 characters
-                            are required.</span>
-                        <span class="error" *ngIf="myForm.get('title')?.errors?.['maxlength']">Exceeded maximum number
-                            of characters.</span>
+<body>
+    <div class="container">
+        <div class="title-row">
+            <h2>New property</h2>
+        </div>
+        <div class="container">
+            <form class="main-form" [formGroup]="itemForm">
+                <label for="title" class="input-title">Title</label>
+                <div class="error-row"
+                    *ngIf="itemForm.get('title')?.invalid && (itemForm.get('title')?.dirty || itemForm.get('title')?.touched)">
+                    <span class="error" *ngIf="itemForm.get('title')?.errors?.['required']">Title is required.</span>
+                    <span class="error" *ngIf="itemForm.get('title')?.errors?.['minlength']">Minimum of 5 characters
+                        are required.</span>
+                    <span class="error" *ngIf="itemForm.get('title')?.errors?.['maxlength']">Exceeded maximum number
+                        of characters.</span>
+                </div>
+                <div class="input-row">
+                    <input type="text" id="title" name="title" formControlName="title">
+                </div>
+                <label for="types" class="input-title">Types</label>
+                <div class="error-row" *ngIf="noTypes">
+                    <span class="error">Type is required.</span>
+                </div>
+                <div class="input-row">
+                    <div *ngFor="let type of types">
+                        <input type="checkbox" (click)="pushType(type, $event)">
+                        <label>{{ type.name }}</label>
                     </div>
-                    <input type="text" id="title" name="title" placeholder="Title" formControlName="title">
-                    <div
-                        *ngIf="myForm.get('city')?.invalid && (myForm.get('city')?.dirty || myForm.get('city')?.touched)">
-                        <span class="error" *ngIf="myForm.get('city')?.errors?.['required']">City is required.</span>
-                    </div>
-                    <select class="form-select" id="city" name="city" formControlName="city">
+                </div>
+                <label for="city" class="input-title">State</label>
+                <div class="error-row"
+                    *ngIf="itemForm.get('city')?.invalid && (itemForm.get('city')?.dirty || itemForm.get('city')?.touched)">
+                    <span class="error" *ngIf="itemForm.get('city')?.errors?.['required']">City is required.</span>
+                </div>
+                <div class="input-row">
+                    <select class="form-select" id="city" name="city" formControlName="city" formControlName="city">
                         <option selected="All States" value="">All States</option>
                         <option>Cityville</option>
                         <option>Metropolis</option>
                         <option>Scenicview</option>
                         <option>Corporateville</option>
+                        <option>Ruralville</option>
                         <option>Suburbia</option>
                         <option>Highrise City</option>
                         <option>Mountainville</option>
                     </select>
-                    <div
-                        *ngIf="myForm.get('type')?.invalid && (myForm.get('type')?.dirty || myForm.get('type')?.touched)">
-                        <span class="error" *ngIf="myForm.get('type')?.errors?.['required']">Type is required.</span>
-                    </div>
-                    <select class="form-select" id="type" name="type" formControlName="type">
-                        <option selected="All Types" value="">All Types</option>
-                        <option *ngFor="let type of types" [value]="type._id">{{ type.name }}</option>
-                    </select>
                 </div>
-                <div
-                    *ngIf="myForm.get('type')?.value !== '65afd0827c1611711ff207b5' && myForm.get('type')?.value !== ''">
-                    <div
-                        *ngIf="myForm.get('bedrooms')?.invalid && (myForm.get('bedrooms')?.dirty || myForm.get('bedrooms')?.touched)">
-                        <span class="error" *ngIf="myForm.get('bedrooms')?.errors?.['required']">Bedroom field is
-                            required.</span>
+                <div *ngIf="!disableStreet">
+                    <label for="street" class="input-title">Street</label>
+                    <div class="input-row">
+                        <input type="text" id="street" name="street" placeholder="Street" formControlName="street">
                     </div>
-                    <select class="form-select" id="bedrooms" name="bedrooms"
-                        [disabled]="myForm.get('type')?.value === '65afd0827c1611711ff207b5'"
-                        formControlName="bedrooms">
-                        <option selected="No. of bedrooms" value="">No. of bedrooms</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                    </select>
-                    <div
-                        *ngIf="myForm.get('bathrooms')?.invalid && (myForm.get('bathrooms')?.dirty || myForm.get('bathrooms')?.touched)">
-                        <span class="error" *ngIf="myForm.get('bathrooms')?.errors?.['required']">Bathroom field is
-                            required.</span>
-                    </div>
-                    <select class="form-select" id="bathrooms" name="bathrooms"
-                        [disabled]="type === '65afd0827c1611711ff207b5'" formControlName="bathrooms">
-                        <option selected="No. of bathrooms" value="">No. of bathrooms</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                    </select>
-                    <div
-                        *ngIf="myForm.get('garages')?.invalid && (myForm.get('garages')?.dirty || myForm.get('garages')?.touched)">
-                        <span class="error" *ngIf="myForm.get('garages')?.errors?.['required']">Garage field is
-                            required.</span>
-                    </div>
-                    <select class="form-select" id="garages" name="garages"
-                        [disabled]="type === '65afd0827c1611711ff207b5'" formControlName="garages">
-                        <option selected="No. of garages" value="">No. of garages</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                    </select>
-                    <div
-                        *ngIf="myForm.get('street')?.invalid && (myForm.get('street')?.dirty || myForm.get('street')?.touched)">
-                        <span class="error" *ngIf="myForm.get('street')?.errors?.['required']">Street is
-                            required.</span>
-                    </div>
-                    <input type="text" id="street" name="street" placeholder="Street" formControlName="street">
-                    <div
-                        *ngIf="myForm.get('size')?.invalid && (myForm.get('size')?.dirty || myForm.get('size')?.touched)">
-                        <span class="error" *ngIf="myForm.get('size')?.errors?.['required']">Size is required.</span>
-                        <span class="error" *ngIf="myForm.get('size')?.errors?.['pattern']">Must be a number.</span>
-                        <span class="error" *ngIf="myForm.get('size')?.errors?.['max']">Maximum size exceeded.</span>
-                    </div>
-                    <input type="text" id="size" name="size" placeholder="Size (m2)" formControlName="size">
                 </div>
-                <div
-                    *ngIf="myForm.get('type')?.value === '65afd0827c1611711ff207b5' && myForm.get('type')?.value !== ''">
-                    <div
-                        *ngIf="myForm.get('area')?.invalid && (myForm.get('area')?.dirty || myForm.get('area')?.touched)">
-                        <span class="error" *ngIf="myForm.get('area')?.errors?.['required']">Area is required.</span>
-                        <span class="error" *ngIf="myForm.get('area')?.errors?.['pattern']">Must be a number.</span>
-                        <span class="error" *ngIf="myForm.get('area')?.errors?.['max']">Maximum area exceeded.</span>
+                <div *ngIf="!disableBedrooms">
+                    <label for="bedrooms" class="input-title">Bedrooms</label>
+                    <div class="input-row">
+                        <select class="form-select" id="bedrooms" name="bedrooms" formControlName="bedrooms">
+                            <option selected="No. of bedrooms" value="">No. of bedrooms</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
                     </div>
-                    <input type="text" id="area" name="area" placeholder="Area (ha)" formControlName="area">
                 </div>
-                <div>
-                    <div
-                        *ngIf="myForm.get('price')?.invalid && (myForm.get('price')?.dirty || myForm.get('price')?.touched)">
-                        <span class="error" *ngIf="myForm.get('price')?.errors?.['required']">Price is required.</span>
-                        <span class="error" *ngIf="myForm.get('price')?.errors?.['pattern']">Must be a number.</span>
-                        <span class="error" *ngIf="myForm.get('price')?.errors?.['max']">Maximum price exceeded.</span>
+                <div *ngIf="!disableBathrooms">
+                    <label for="bathrooms" class="input-title">Bathrooms</label>
+                    <div class="input-row">
+                        <select class="form-select" id="bathrooms" name="bathrooms" formControlName="bathrooms">
+                            <option selected="No. of bathrooms" value="">No. of bathrooms</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
                     </div>
+                </div>
+                <div *ngIf="!disableSize">
+                    <label for="size" class="input-title">Size</label>
+                    <div class="error-row"
+                        *ngIf="itemForm.get('size')?.invalid && (itemForm.get('size')?.dirty || itemForm.get('size')?.touched)">
+                        <span class="error" *ngIf="itemForm.get('size')?.errors?.['required']">Size is required.</span>
+                        <span class="error" *ngIf="itemForm.get('size')?.errors?.['pattern']">Must be a number.</span>
+                        <span class="error" *ngIf="itemForm.get('size')?.errors?.['max']">Maximum size exceeded.</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="text" id="size" name="size" placeholder="Size (m2)" formControlName="size">
+                    </div>
+                </div>
+                <div *ngIf="!disableArea">
+                    <label for="area" class="input-title">Area</label>
+                    <div class="error-row"
+                        *ngIf="itemForm.get('area')?.invalid && (itemForm.get('area')?.dirty || itemForm.get('area')?.touched)">
+                        <span class="error" *ngIf="itemForm.get('area')?.errors?.['required']">Area is required.</span>
+                        <span class="error" *ngIf="itemForm.get('area')?.errors?.['pattern']">Must be a number.</span>
+                        <span class="error" *ngIf="itemForm.get('area')?.errors?.['max']">Maximum area exceeded.</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="text" id="area" name="area" placeholder="Area (ha)" formControlName="area">
+                    </div>
+                </div>
+                <label for="price" class="input-title">Price</label>
+                <div class="error-row"
+                    *ngIf="itemForm.get('price')?.invalid && (itemForm.get('price')?.dirty || itemForm.get('price')?.touched)">
+                    <span class="error" *ngIf="itemForm.get('price')?.errors?.['required']">Price is required.</span>
+                    <span class="error" *ngIf="itemForm.get('price')?.errors?.['pattern']">Must be a number.</span>
+                    <span class="error" *ngIf="itemForm.get('price')?.errors?.['max']">Maximum price exceeded.</span>
+                </div>
+                <div class="input-row">
                     <input type="text" id="price" name="price" placeholder="Price (€)" formControlName="price">
                 </div>
+                <label for="description" class="input-title">Description</label>
+                <div class="error-row"
+                    *ngIf="itemForm.get('description')?.invalid && (itemForm.get('description')?.dirty || itemForm.get('description')?.touched)">
+                    <span class="error" *ngIf="itemForm.get('description')?.errors?.['minlength']">Minimum of 5
+                        characters
+                        are required.</span>
+                    <span class="error" *ngIf="itemForm.get('description')?.errors?.['maxlength']">Exceeded maximum
+                        number of characters.</span>
+                </div>
+                <div class="input-row">
+                    <textarea type="text" type="text" id="description" name="description" placeholder="Description"
+                        formControlName="description"></textarea>
+                </div>
+                <div class="input-row">
+                    <input type="checkbox" id="forsale" name="forsale" formControlName="forsale">
+                    <label for="forsale">For Sale</label>
+                    <input type="checkbox" id="featured" name="featured" formControlName="featured">
+                    <label for="featured">Featured</label>
+                </div>
                 <div>
-                    <div>
-                        <input type="checkbox" name="forsale" id="forsale" formControlName="forsale">
-                        <label for="forsale">For Sale</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" name="featured" id="featured" formControlName="featured">
-                        <label for="featured">Featured</label>
-                    </div>
-                    <div>
-                        <input class="form-control" type="file" multiple accept=".jpg, .jpeg, .png"
-                            (change)="onFileChange($event)" />
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="card col-md-3" *ngFor="let file of images; let i = index">
-                            <div class="card-body">
-                                <div class="resizable-container">
-                                    <img [src]="previewImages[i]" alt="Image Preview" class="resizable-image">
-                                </div>
-                            </div>
+                    <label for="utility" class="input-title">Title</label>
+                    <div class="input-row">
+                        <div *ngFor="let utility of utilities">
+                            <input type="checkbox" id="utility" name="utility" (click)="pushUtility(utility, $event)">
+                            <label>{{ utility.name }}</label>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div *ngIf="fileError">
-                            <span class="error">{{ fileError }}</span>
-                        </div>
-                        <button type="submit" [disabled]="myForm.invalid || myForm.pending"
-                            (click)="createItem(); uploadImages(); backToDashboard()">Save</button>
                     </div>
                 </div>
-            </div>
+                <div class="error-row">
+                    <div *ngIf="fileError">
+                        <span class="error">{{ fileError }}</span>
+                    </div>
+                </div>
+                <div>
+                    <input class="form-control" type="file" multiple accept=".jpg, .jpeg, .png"
+                        (change)="onFileChange($event)" />
+                </div>
+                <br>
+                <div class="input-row">
+                    <div class="input-row" *ngFor="let file of images; let i = index">
+                        <img [src]="previewImages[i]" alt="Image Preview" class="resizable-image">
+                    </div>
+                </div>
+                <div class="button-row">
+                    <div>
+                        <button class="save" (click)="save(); itemForm.markAllAsTouched()">Save</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-</form>
+</body>

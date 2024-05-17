@@ -1,37 +1,71 @@
 import { Component, OnInit } from '@angular/core'
 import { AddItemService } from './add-item.service'
 import { Router } from '@angular/router'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
   styleUrl: './add-item.component.css'
 })
+
 export class AddItemComponent implements OnInit {
   types: any[] = []
-  items: any[] = []
-  title: string = ''
-  type: string = ''
-  street: string = ''
-  city: string = ''
-  address: any = {}
-  bedrooms: number | null = null
-  bathrooms: number | null = null
-  garages: number | null = null
-  price: number | null = null
-  size: number | null = null
-  area: number | null = null
-  forsale: boolean | null = false
-  featured: boolean | null = false
+  utilities: any[] = []
+  itemForm !: FormGroup
   images: any[] = []
   formData = new FormData
-  myForm !: FormGroup
   fileError: string | null = null
   previewImages: string[] = []
   storage = 'http://localhost:3000/uploads/'
+  disableStreet = false
+  disableBedrooms = false
+  disableBathrooms = false
+  disableSize = false
+  disableArea = false
+  noTypes = false
 
-  constructor(private addItemService : AddItemService, private router : Router, private formBuilder: FormBuilder) {}
+  constructor(
+    private addItemService: AddItemService,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {
+    this.itemForm = this.formBuilder.group({
+      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
+      types: [[]],
+      city: ['', Validators.required],
+      price: ['', [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
+      bedrooms: [''],
+      bathrooms: [''],
+      street: ['', [Validators.minLength(5), Validators.maxLength(255)]],
+      size: ['', [Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
+      area: ['', [Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
+      description: ['', [Validators.minLength(5), Validators.maxLength(255)]],
+      forsale: [false],
+      featured: [false],
+      utilities: [[]]
+    })
+  }
+
+  ngOnInit(): void {
+    this.hasType()
+    this.addItemService.getTypes().subscribe(
+      data => {
+        this.types = data
+      },
+      error => {
+        console.error('Error fetching types', error)
+      }
+    )
+    this.addItemService.getUtilities().subscribe(
+      data => {
+        this.utilities = data
+      },
+      error => {
+        console.error('Error fetching utilities', error)
+      }
+    )
+  }
 
   onFileChange(event: any) {
     const files: FileList = event.target.files
@@ -40,11 +74,11 @@ export class AddItemComponent implements OnInit {
       const allowedTypes = ['image/jpeg', 'image/png']
       for (let i = 0; i < files.length; i++) {
         const file = files.item(i)
-        if(file && file.size > maxSize) {
-          this.fileError = 'File size exceeds 5MB limit.'
+        if (file && file.size > maxSize) {
+          this.fileError = "File size of '" + file.name + "' exceeds 5MB limit."
           return
         }
-        if(file && !allowedTypes.includes(file.type)) {
+        if (file && !allowedTypes.includes(file.type)) {
           this.fileError = 'Invalid file type.'
           return
         }
@@ -53,8 +87,8 @@ export class AddItemComponent implements OnInit {
         if (file) {
           const reader = new FileReader()
           reader.onload = () => {
-              this.previewImages.push(reader.result as string)
-          };
+            this.previewImages.push(reader.result as string)
+          }
           reader.readAsDataURL(files[i])
         }
       }
@@ -62,109 +96,146 @@ export class AddItemComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.addItemService.getTypes().subscribe(
-      data => {
-        this.types = data
-      },
-      error => {
-        console.error('Error fetching types', error)
-      }) 
-    this.myForm = this.formBuilder.group({ 
-      title: [{ value: '', disabled: false }, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
-      city: [{ value: '', disabled: false }, Validators.required], 
-      type: [{ value: '', disabled: false }, Validators.required],
-      price: [{ value: '', disabled: false }, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
-      bedrooms: [{ value: '', disabled: false }, Validators.required],
-      bathrooms: [{ value: '', disabled: false }, Validators.required],
-      garages: [{ value: '', disabled: false }, Validators.required],
-      street: [{ value: '', disabled: false }, [Validators.required, Validators.minLength(5), Validators.maxLength(255)]],
-      size: [{ value: '', disabled: false }, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
-      area: [{ value: '', disabled: false }, [Validators.required, Validators.pattern('0|[0-9]+'), Validators.max(999999999)]],
-      featured: [{ value: false, disabled: false}],
-      forsale: [{ value: false, disabled: false}]
-    })
-    this.myForm.get('type')?.valueChanges.subscribe(value => {
-      if(value === '65afd0827c1611711ff207b5') {
-        this.myForm.get('bedrooms')?.clearValidators()
-        this.myForm.get('bathrooms')?.clearValidators()
-        this.myForm.get('garages')?.clearValidators()
-        this.myForm.get('street')?.clearValidators()
-        this.myForm.get('size')?.clearValidators()
-        this.myForm.get('area')?.setValidators(Validators.required)
-        this.removeConditionalFieldsPlot()
-      } else {
-        this.myForm.get('bedrooms')?.setValidators(Validators.required)
-        this.myForm.get('bathrooms')?.setValidators(Validators.required)
-        this.myForm.get('garages')?.setValidators(Validators.required)
-        this.myForm.get('street')?.setValidators(Validators.required)
-        this.myForm.get('size')?.setValidators(Validators.required)
-        this.myForm.get('area')?.clearValidators()
-        this.removeConditionalFieldsElse()
-      }
-      this.myForm.get('bedrooms')?.updateValueAndValidity()
-      this.myForm.get('bathrooms')?.updateValueAndValidity()
-      this.myForm.get('garages')?.updateValueAndValidity()
-      this.myForm.get('street')?.updateValueAndValidity()
-      this.myForm.get('size')?.updateValueAndValidity()
-      this.myForm.get('area')?.updateValueAndValidity()
-    })
+  hasType() {
+    const types = this.itemForm.get('types')?.value
+    const isPlotType = types.some((type: any) => type.name === 'Plot')
+
+    if (isPlotType) {
+      this.itemForm.get('area')?.setValidators([Validators.required])
+      this.itemForm.get('size')?.clearValidators()
+      this.disableStreet = true
+      this.itemForm.get('street')?.disable()
+      this.disableBedrooms = true
+      this.itemForm.get('bedrooms')?.disable()
+      this.disableBathrooms = true
+      this.itemForm.get('bathrooms')?.disable()
+      this.disableSize = true
+      this.itemForm.get('size')?.disable()
+      this.disableArea = false
+      this.itemForm.get('area')?.enable()
+    }
+
+    if (isPlotType && types.length > 1) {
+      this.itemForm.get('area')?.setValidators([Validators.required])
+      this.itemForm.get('size')?.setValidators([Validators.required])
+      this.disableStreet = false
+      this.itemForm.get('street')?.enable()
+      this.disableBedrooms = false
+      this.itemForm.get('bedrooms')?.enable()
+      this.disableBathrooms = false
+      this.itemForm.get('bathrooms')?.enable()
+      this.disableSize = false
+      this.itemForm.get('size')?.enable()
+      this.disableArea = false
+      this.itemForm.get('area')?.enable()
+    }
+
+    if (!isPlotType) {
+      this.itemForm.get('size')?.setValidators([Validators.required])
+      this.itemForm.get('area')?.clearValidators()
+      this.disableStreet = false
+      this.itemForm.get('street')?.enable()
+      this.disableBedrooms = false
+      this.itemForm.get('bedrooms')?.enable()
+      this.disableBathrooms = false
+      this.itemForm.get('bathrooms')?.enable()
+      this.disableSize = false
+      this.itemForm.get('size')?.enable()
+      this.disableArea = true
+      this.itemForm.get('area')?.disable()
+    }
+
+    if (types.length === 0) {
+      this.itemForm.get('area')?.clearValidators()
+      this.itemForm.get('size')?.clearValidators()
+      this.disableStreet = true
+      this.itemForm.get('street')?.disable()
+      this.disableBedrooms = true
+      this.itemForm.get('bedrooms')?.disable()
+      this.disableBathrooms = true
+      this.itemForm.get('bathrooms')?.disable()
+      this.disableSize = true
+      this.itemForm.get('size')?.disable()
+      this.disableArea = true
+      this.itemForm.get('area')?.disable()
+    }
+
+    this.itemForm.get('size')?.updateValueAndValidity()
+    this.itemForm.get('area')?.updateValueAndValidity()
   }
 
-  removeConditionalFieldsPlot() {
-    this.myForm.get('bedrooms')?.setValue('')
-    this.myForm.get('bathrooms')?.setValue('')
-    this.myForm.get('garages')?.setValue('')
-    this.myForm.get('street')?.setValue('')
-    this.myForm.get('size')?.setValue('')
+  pushType(type: any, event: any) {
+    const types = this.itemForm.get('types')?.value
+    const isChecked = event.target.checked
+    const index = types.findIndex((t: any) => t._id === type._id)
+    if (isChecked && index === -1) {
+      types.push(type)
+    } else if (!isChecked && index !== -1) {
+      types.splice(index, 1)
+    }
+    this.hasType()
   }
 
-  removeConditionalFieldsElse() {
-    this.myForm.get('area')?.setValue('')
+  pushUtility(utility: any, event: any) {
+    const utilities = this.itemForm.get('utilities')?.value
+    const isChecked = event.target.checked
+    const index = utilities.findIndex((u: any) => u._id === utility._id)
+    if (isChecked && index === -1) {
+      utilities.push(utility)
+    } else if (!isChecked && index != -1) {
+      utilities.splice(index, 1)
+    }
   }
 
-  createItem(): void {
-    this.address.append
-    const itemData = { 
-      title: this.myForm.get('title')?.value,
-      type: this.myForm.get('type')?.value,
+  save() {
+    const item = this.itemForm.value
+    const updatedTypes = item.types.map((type: any) => type._id)
+    const updatedUtilities = item.utilities.map((utility: any) => utility._id)
+
+    const itemToSave = {
+      title: item.title,
+      types: updatedTypes,
       address: {
-        street: this.myForm.get('street')?.value,
-        city: this.myForm.get('city')?.value,
+        street: item.street,
+        city: item.city,
         country: 'Countryland'
       },
-      bedrooms: this.myForm.get('bedrooms')?.value,
-      bathrooms: this.myForm.get('bathrooms')?.value,
-      garages: this.myForm.get('garages')?.value,
-      price: this.myForm.get('price')?.value,
-      size: this.myForm.get('size')?.value,
-      area: this.myForm.get('area')?.value,
-      forsale: this.myForm.get('forsale')?.value,
-      featured: this.myForm.get('featured')?.value,
+      price: item.price,
+      bedrooms: item.bedrooms,
+      bathrooms: item.bathrooms,
+      size: item.size,
+      area: item.area,
+      description: item.description,
+      forsale: item.forsale,
+      featured: item.featured,
+      utilities: updatedUtilities,
       images: this.images
     }
-    
-    this.addItemService.createItem(itemData).subscribe(
-      (response) => {
-        console.log('Item created successfully:', response)
-      },
-      (error) => {
-        console.error('Error creating item:', error)
-      })
-  }
 
-  uploadImages() : void {
-    this.addItemService.uploadImages(this.formData).subscribe(
-      (response) => {
-        console.log('Files uploaded successfully:', response)
-      },
-      (error) => {
-        console.error('Error uploading files:', error)
-      })
-  }
+    if (itemToSave.types.length !== 0) {
+      if (this.itemForm.valid) {
+        this.addItemService.createItem(itemToSave).subscribe(
+          (response) => {
+            console.log(itemToSave)
+            console.log('Item created successfully:', response)
+          },
+          (error) => {
+            console.error('Error creating item:', error)
+          })
 
-  backToDashboard() {
-    this.router.navigate(['/admin'])
+        this.addItemService.uploadImages(this.formData).subscribe(
+          (response) => {
+            console.log('Files uploaded successfully:', response)
+          },
+          (error) => {
+            console.error('Error uploading files:', error)
+          })
+
+        this.router.navigate(['admin/admin-dashboard'])
+      }
+    } else {
+      this.noTypes = true
+    }
   }
 }
 

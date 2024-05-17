@@ -21,13 +21,13 @@
   margin-bottom: 20px;
 }
 
-.toggleDiv {
+.toggle-div {
   margin-top: 20px;
   color: white;
   display: flex;
 }
 
-.toggleText {
+.toggle-text {
   padding-top: 8px;
 }
 
@@ -54,6 +54,7 @@
   cursor: pointer;
   outline: none;
   transition: 0.3s;
+  background-color: white;
 }
 
 .toggle-switch button.active {
@@ -91,7 +92,6 @@ label {
 }
 
 .search {
-  width: 10%;
   background-color: steelblue;
   color: white;
   padding: 10px;
@@ -99,6 +99,7 @@ label {
   border-radius: 4px;
   cursor: pointer;
   margin-top: 24px;
+  width: 75px;
 }
 
 .card {
@@ -170,4 +171,12 @@ label {
 
 .item-container {
   min-height: 100vh;
+}
+
+p {
+  font-size: small;
+}
+
+h5 {
+  font-size: large;
 }

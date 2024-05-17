@@ -1,29 +1,29 @@
 <body>
-  <div class="title-row">
-    <h1>Admin Dashboard</h1>
-    <button class="addItemBtn" (click)="navAdd()">Add item <i class="bi bi-plus-circle"></i></button>
-  </div>
   <div class="container">
-    <table *ngFor="let item of items; let i = index">
+    <div class="title-row">
+      <h2>Admin Dashboard</h2>
+      <button class="add" (click)="navAdd()">Add new property</button>
+    </div>
+    <table>
       <thead>
         <tr>
           <th>Image</th>
-          <th>Item ID</th>
-          <th>Title</th>
+          <th>Property ID</th>
+          <th>Property title</th>
           <th>Type</th>
           <th>Status</th>
           <th>Price</th>
           <th>Date</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
+      <tbody *ngFor="let item of items; let i = index">
+        <tr (mouseenter)="onMouseEnter(item)">
           <td>
-            <img [src]="item.images[0]" (error)="handleImageError($event)">
+            <img class="resizable-image" [src]="item.images[0]" (error)="handleImageError($event)">
           </td>
           <td>{{ item._id }}
         <tr>
-          <ul>
+          <ul class="option-row" *ngIf="isVisible">
             <li><a (click)="navShow(item._id)">View</a></li>
             <li><a (click)="navEdit(item._id)">Edit</a></li>
             <li><a (click)="delete(item)">Delete</a></li>
@@ -32,10 +32,13 @@
         </td>
         <td>{{ item.title }}</td>
         <td>
-          <p *ngFor="let type of item.types; let j = index">{{ item.types[j].name }}</p>
+          <div class="type-row" *ngFor="let type of item.types; let i = index">
+            <div class="type">{{ type.name }}</div>
+            <div class="type-separator" *ngIf="item.types.length > 1 && i !== item.types.length-1">, </div>
+          </div>
         </td>
         <td>{{ item.forsale ? 'For sale' : 'For rent'}}</td>
-        <td>{{ item.price }} €</td>
+        <td>{{ item.price }}</td>
         <td>{{ item.created_at }}</td>
         </tr>
       </tbody>

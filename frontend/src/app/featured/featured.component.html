@@ -13,19 +13,19 @@
           <div class="container">
             <div class="card">
               <div class="image-box">
-                <input type="image" (click)="viewDetails(item._id)" class="resizable-image" [src]="item.images[0]" (error)="handleImageError($event)"
-                  alt="Property Image" />
+                <input type="image" (click)="viewDetails(item._id)" class="resizable-image" [src]="item.images[0]"
+                  (error)="handleImageError($event)" alt="Property Image" />
               </div>
               <div class="card-body">
                 <div class="card-title">
-                  <p class="card-text">{{ item.title }}</p>
+                  <h5 class="card-text">{{ item.title }}</h5>
                 </div>
                 <div class="attributes">
-                  <div *ngIf="item.address.street !== null">
+                  <div *ngIf="item.address.street">
                     <p class="card-text"><i class="bi bi-geo-alt"></i>{{ item.address.street }}, {{ item.address.city}}
                     </p>
                   </div>
-                  <div *ngIf="item.address.street === null">
+                  <div *ngIf="!item.address.street">
                     <p class="card-text"><i class="bi bi-geo-alt"></i>{{ item.address.city }}</p>
                   </div>
                 </div>
@@ -45,36 +45,32 @@
               </div>
               <div *ngIf="i % 2 === 0">
                 <div class="attributes-details">
-                  <div *ngFor="let type of item.types">
-                    <div *ngIf="type.name === 'Plot'" class="attributes">
-                      <p class="card-text"><i class="bi bi-arrows-move"></i>{{ item.area }} m<sup>2</sup></p>
-                    </div>
-                  </div>
-                  <div class="attributes" *ngIf="item.size !== null" class="attributes">
+                  <div class="attributes" *ngIf="item.size">
                     <p class="card-text"><i class="bi bi-arrows-angle-expand"></i>{{ item.size }} m<sup>2</sup></p>
                   </div>
-                  <div class="attributes" *ngIf="item.bedrooms !== null">
+                  <div *ngIf="item.area" class="attributes">
+                    <p class="card-text"><i class="bi bi-arrows-move"></i>{{ item.area }} m<sup>2</sup></p>
+                  </div>
+                  <div class="attributes" *ngIf="item.bedrooms">
                     <p class="card-text"><i class="bi bi-door-open"></i>{{ item.bedrooms }}</p>
                   </div>
-                  <div class="attributes" *ngIf="item.bathrooms !== null">
+                  <div class="attributes" *ngIf="item.bathrooms">
                     <p class="card-text"><i class="bi bi-droplet"></i>{{ item.bathrooms }}</p>
                   </div>
                 </div>
               </div>
               <div *ngIf="i % 2 === 1">
                 <div class="attributes-details-other">
-                  <div *ngFor="let type of item.types">
-                    <div *ngIf="type.name === 'Plot'" class="attributes">
-                      <p class="card-text"><i class="bi bi-arrows-move"></i>{{ item.area }} m<sup>2</sup></p>
-                    </div>
-                  </div>
-                  <div class="attributes" *ngIf="item.size !== null" class="attributes">
+                  <div class="attributes" *ngIf="item.size">
                     <p class="card-text"><i class="bi bi-arrows-angle-expand"></i>{{ item.size }} m<sup>2</sup></p>
                   </div>
-                  <div class="attributes" *ngIf="item.bedrooms !== null">
+                  <div class="attributes" *ngIf="item.area">
+                    <p class="card-text"><i class="bi bi-arrows-move"></i>{{ item.area }} m<sup>2</sup></p>
+                  </div>
+                  <div class="attributes" *ngIf="item.bedrooms">
                     <p class="card-text"><i class="bi bi-door-open"></i>{{ item.bedrooms }}</p>
                   </div>
-                  <div class="attributes" *ngIf="item.bathrooms !== null">
+                  <div class="attributes" *ngIf="item.bathrooms">
                     <p class="card-text"><i class="bi bi-droplet"></i>{{ item.bathrooms }}</p>
                   </div>
                 </div>

@@ -57,9 +57,13 @@ export class ItemDetailsComponent {
     this.ItemDetailsService.getItem(itemId).subscribe(
       (item) => {
         this.item = item
+        if (this.item.size) {
+          item.size = formatNumber(Number(item.size), 'en-US', '1.0-0')
+        }
+        if (this.item.area) {
+          item.area = formatNumber(Number(item.area), 'en-US', '1.0-0')
+        }
         item.price = formatNumber(Number(item.price), 'en-US', '1.0-0')
-        item.size = formatNumber(Number(item.size), 'en-US', '1.0-0')
-        item.area = formatNumber(Number(item.area), 'en-US', '1.0-0')
       },
       (error) => {
         console.error('Error fetching item.', error)

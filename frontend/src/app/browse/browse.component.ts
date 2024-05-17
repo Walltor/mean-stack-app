@@ -91,9 +91,13 @@ export class BrowseComponent implements OnInit {
       data => {
         this.items = data
         for (let index = 0; index < this.items.length; index++) {
+          if (this.items[index].size) {
+            this.items[index].size = formatNumber(Number(this.items[index].size), 'en-US', '1.0-0')
+          }
+          if (this.items[index].area) {
+            this.items[index].area = formatNumber(Number(this.items[index].area), 'en-US', '1.0-0')
+          }
           this.items[index].price = formatNumber(Number(this.items[index].price), 'en-US', '1.0-0')
-          this.items[index].size = formatNumber(Number(this.items[index].size), 'en-US', '1.0-0')
-          this.items[index].area = formatNumber(Number(this.items[index].area), 'en-US', '1.0-0')
         }
       },
       error => {
